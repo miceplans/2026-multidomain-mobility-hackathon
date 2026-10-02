@@ -1,1 +1,1 @@
-# 2026-multidomain-mobility-hackathon
+# 2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
