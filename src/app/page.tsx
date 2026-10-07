@@ -104,12 +104,18 @@ const finalPlan = [
 ];
 
 const schedule = [
-  { step: '사업공고 및 홍보', period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지' },
+  {
+    step: '사업공고 및 홍보',
+    period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지',
+  },
   { step: '신청접수', period: '신청서 및 컨셉기획안' },
   { step: '예선 심사', period: "'26. 10월 4주차 예정 (서면심사)" },
   { step: '본선 참가팀 선정결과 발표', period: "'26. 11월 1주차 예정" },
   { step: '본선 대회', period: "'26. 11. 8.(일) ~ 11. 10.(화)" },
-  { step: '본선 심사', period: "중간심사 '26. 11. 9.(월) / 최종심사 '26. 11. 10.(화)" },
+  {
+    step: '본선 심사',
+    period: "중간심사 '26. 11. 9.(월) / 최종심사 '26. 11. 10.(화)",
+  },
   { step: '시상식', period: "'26. 11. 10.(화)" },
 ];
 
@@ -120,7 +126,6 @@ const notices = [
   '팀원 중 출입국 불허자 발생 시 팀 전원의 대회 참여가 제한될 수 있으며, 이는 참가자 본인의 귀책으로 간주합니다.',
   '상기 일정은 대회 진행 경과에 따라 일부 변경될 수 있으며, 변경 시 추후 대회 홈페이지 등을 통해 공지합니다.',
 ];
-
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -170,9 +175,7 @@ export default async function HomePage() {
               </p>
               <h1 className="mt-6 flex w-full flex-col items-center text-[clamp(2.25rem,6vw,4.75rem)] leading-[1.08] font-black tracking-[-0.055em]">
                 <span>2026 동남권</span>
-                <span className="text-[#45C4DE]">
-                  멀티도메인 모빌리티
-                </span>
+                <span className="text-[#45C4DE]">멀티도메인 모빌리티</span>
                 <span>비즈니스 해커톤</span>
               </h1>
               <p className="mt-10 text-2xl font-black tracking-[-0.035em] text-white sm:text-4xl">

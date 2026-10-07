@@ -203,7 +203,11 @@ export default function Page() {
       const prepared = await readJson<PrepareResponse>(prepareResponse);
       if (!prepareResponse.ok) {
         showToast(
-          apiErrorMessage(prepareResponse.status, prepared, '추가하지 못했습니다.'),
+          apiErrorMessage(
+            prepareResponse.status,
+            prepared,
+            '추가하지 못했습니다.',
+          ),
         );
         return;
       }

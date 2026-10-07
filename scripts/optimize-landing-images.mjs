@@ -15,5 +15,7 @@ for (const { source, output, width, quality } of variants) {
     .webp({ quality, alphaQuality: 100, effort: 6 })
     .toFile(target);
   const metadata = await sharp(target).metadata();
-  console.log(`${target}: ${metadata.width}×${metadata.height}, ${(await stat(target)).size} bytes`);
+  console.log(
+    `${target}: ${metadata.width}×${metadata.height}, ${(await stat(target)).size} bytes`,
+  );
 }

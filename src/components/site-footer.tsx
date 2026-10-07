@@ -22,14 +22,18 @@ export function SiteFooter() {
               >
                 051-866-8702, 8708
               </a>
-              <p className="text-sm text-white/60">대회 사무국: 추후 별도 안내</p>
+              <p className="text-sm text-white/60">
+                대회 사무국: 추후 별도 안내
+              </p>
             </div>
           </div>
 
           <div className="text-sm leading-6 text-white/60">
             <p>주최 산업통상부 · 부산광역시 · 울산광역시 · 경상남도</p>
             <p>주관 한국산업기술진흥원 · 동남권지역혁신융복합단지추진단</p>
-            <p>공동 운영 부산테크노파크 · 울산지역산업진흥원 · 경남테크노파크</p>
+            <p>
+              공동 운영 부산테크노파크 · 울산지역산업진흥원 · 경남테크노파크
+            </p>
           </div>
         </div>
 

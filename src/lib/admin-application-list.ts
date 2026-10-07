@@ -16,7 +16,14 @@ export type ApplicationListParams = {
 };
 
 export const getCachedApplicationList = unstable_cache(
-  async ({ page, size, search, from, to, ascending }: ApplicationListParams) => {
+  async ({
+    page,
+    size,
+    search,
+    from,
+    to,
+    ascending,
+  }: ApplicationListParams) => {
     let query = createAdminClient()
       .from('applications')
       .select(
