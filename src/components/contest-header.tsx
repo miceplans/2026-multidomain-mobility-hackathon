@@ -27,7 +27,7 @@ export function ContestHeader({
           singleLineMobile ? 'text-[15px]' : 'text-lg'
         }`}
       >
-        2026 멀티도메인 모빌리티 해커톤
+        2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
       </Link>
       {(helper || actionLabel || links?.length) && (
         <div

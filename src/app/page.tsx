@@ -160,7 +160,7 @@ export default async function HomePage() {
             className="flex min-h-11 items-center text-base font-semibold tracking-[-0.045em] sm:text-xl"
             href="/"
           >
-            2026 멀티도메인 모빌리티 해커톤
+            2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
           </Link>
           <MobileNav />
         </div>
