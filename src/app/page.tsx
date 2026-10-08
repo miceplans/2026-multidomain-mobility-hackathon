@@ -73,7 +73,7 @@ const participantTypes = [
   {
     category: '기업부문',
     target:
-      '동남권(부산·울산·경남) 사업장 소재 중소·중견기업 1~2개사 내외로 구성(본점,지점, 연구소, 공장 인정)\n주관으로 신청하는 동남권 소재 기업은 타 지역 소재 기업과 컨소시엄 구성 가능(2개사 컨소시엄 구성시)',
+      '동남권(부산·울산·경남) 사업장 소재 중소·중견기업 1~2개사 내외로 구성(본점,지점, 연구소, 공장 인정)\n동남권 주관기업(필수) 및 타 지역 기업 간 컨소시엄형 참여 가능',
     notes: [
       '팀장 1명 및 팀원 3명 구성',
       '기업 재직자 및 대학(원)생 참여 가능',
@@ -322,7 +322,7 @@ export default async function HomePage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="mt-10 h-auto w-full max-w-[900px] sm:mt-16"
-              src="/assets/organizers.png"
+              src="/assets/multidomain_final_logo.webp"
               width={4489}
               height={162}
               alt="주최 산업통상부, 부산광역시, 울산광역시, 경상남도 / 주관 한국산업기술진흥원, 동남권지역혁신융복합단지추진단 / 공동 운영 부산테크노파크, 울산지역산업진흥원, 경남테크노파크"
@@ -389,7 +389,7 @@ export default async function HomePage() {
                             <td>
                               <strong>{row.category}</strong>
                             </td>
-                            <td>{row.target}</td>
+                            <td className="whitespace-pre-line">{row.target}</td>
                             <td>
                               <ul className="grid gap-1 pl-4 [list-style:disc] marker:text-white/40">
                                 {row.notes.map((note) => (
