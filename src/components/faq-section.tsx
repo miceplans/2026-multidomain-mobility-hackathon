@@ -28,12 +28,15 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
                   className="flex min-h-16 w-full items-center justify-between gap-4 px-6 text-left sm:px-8"
                   onClick={() => setOpenIndex(open ? null : index)}
                 >
-                  <span className="text-lg leading-[1.5] font-bold tracking-[-0.02em] sm:text-xl">
-                    {faq.question}
+                  <span className="flex items-baseline gap-3 text-lg leading-[1.5] font-bold tracking-[-0.02em] sm:text-xl">
+                    <span className="shrink-0 text-[#59c3e7]">
+                      Q{index + 1}
+                    </span>
+                    <span>{faq.question}</span>
                   </span>
                   <span
                     aria-hidden="true"
-                    className="shrink-0 text-xl text-[#45C4DE]"
+                    className="shrink-0 text-xl text-[#59c3e7]"
                   >
                     {open ? '▴' : '▾'}
                   </span>
@@ -44,9 +47,10 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
                   aria-labelledby={`faq-question-${index}`}
                   hidden={!open}
                 >
-                  <p className="px-6 py-6 text-lg leading-[1.75] whitespace-pre-line text-white/75 sm:px-8 sm:text-xl">
-                    {faq.answer}
-                  </p>
+                  <div className="flex items-baseline gap-3 px-6 py-6 text-lg leading-[1.75] text-white/75 sm:px-8 sm:text-xl">
+                    <span className="shrink-0 font-bold text-[#59c3e7]">A</span>
+                    <p className="whitespace-pre-line">{faq.answer}</p>
+                  </div>
                 </div>
               </div>
             );

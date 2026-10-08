@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { FaqSection } from '@/components/faq-section';
-import { HeroShip } from '@/components/hero-ship';
 import { MobileNav } from '@/components/mobile-nav';
 import { getSettings } from '@/lib/settings';
 import type { FaqItem } from '@/types';
@@ -61,6 +60,7 @@ const participantTypes = [
 const regionalIndustries = [
   {
     region: '부산',
+    regionEn: 'BUSAN',
     domain: '해상 모빌리티',
     english: 'Naval Domain Mobility',
     description: [
@@ -72,6 +72,7 @@ const regionalIndustries = [
   },
   {
     region: '울산',
+    regionEn: 'ULSAN',
     domain: '육상 모빌리티',
     english: 'Ground Domain Mobility',
     description: [
@@ -83,6 +84,7 @@ const regionalIndustries = [
   },
   {
     region: '경남',
+    regionEn: 'GYEONGNAM',
     domain: '항공 모빌리티',
     english: 'Air Domain Mobility',
     description: [
@@ -145,7 +147,7 @@ export default async function HomePage() {
   }
 
   const panel =
-    'landing-panel mt-5 rounded-[32px] border border-[#45C4DE]/45 p-7 sm:p-10';
+    'landing-panel mt-5 rounded-2xl p-5 sm:p-10';
   const bullet = (
     <span
       aria-hidden="true"
@@ -157,31 +159,29 @@ export default async function HomePage() {
     <div className="landing-high-contrast min-h-screen bg-[#05070f] text-white">
       <header className="sticky top-0 z-20 bg-[#010622]">
         <div className="relative flex items-center justify-between gap-4 px-5 py-[22px] sm:px-8 lg:px-[120px]">
-          <Link
-            className="flex min-h-11 items-center text-base font-bold sm:text-[17px]"
-            href="/"
-          >
-            <span className="block leading-tight sm:inline">2026 동남권</span>{' '}
-            <span className="block leading-tight sm:inline">
-              멀티도메인 모빌리티
-            </span>{' '}
-            <span className="block leading-tight sm:inline">
-              비즈니스 해커톤
-            </span>
+          <Link className="flex min-h-11 items-center" href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt="2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤"
+              className="h-auto w-[110px] sm:w-[130px]"
+              height={1526}
+              src="/assets/hero-logo.png"
+              width={4096}
+            />
           </Link>
           <MobileNav />
         </div>
       </header>
 
       <main>
-        <section className="relative overflow-hidden px-5 pt-16 pb-20 text-center sm:px-8 sm:pt-20 sm:pb-28 lg:pb-32">
+        <section className="relative overflow-hidden px-5 pt-0 pb-16 text-center sm:px-8 sm:pt-20 sm:pb-28 lg:pb-32">
           <div className="relative z-1 mx-auto max-w-[1280px]">
             <div className="hero-copy mx-auto flex max-w-[1280px] flex-col items-center">
-              <h1 className="relative aspect-[1440/842] w-screen max-w-none">
+              <h1 className="relative aspect-[3/4] w-screen max-w-none min-[480px]:aspect-[4/3] sm:aspect-[1440/842]">
                 <span className="sr-only">
                   2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
                 </span>
-                <div className="absolute top-0 bottom-[calc(10%+100px)] left-[8%] w-[84%] overflow-hidden hero-frame">
+                <div className="hero-frame absolute inset-0 overflow-hidden sm:inset-auto sm:top-0 sm:bottom-[calc(10%+100px)] sm:left-[8%] sm:w-[84%]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     alt=""
@@ -195,32 +195,39 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="absolute top-[17.8%] left-[9.2%] h-auto w-[42.8%]"
+                  className="absolute right-0 bottom-0 h-auto w-[92%] sm:w-[60%]"
+                  height={1024}
+                  src="/assets/hero-ship.png"
+                  width={1536}
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  className="absolute top-[10%] left-1/2 h-auto w-[84%] -translate-x-1/2 sm:top-[12%] sm:w-[62%]"
                   height={1526}
                   src="/assets/hero-logo.png"
                   width={4096}
                 />
-                <HeroShip />
               </h1>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="부산↔오사카를 왕복하는 무박 3일간의 선상 크루즈 해커톤"
-                className="mt-10 h-auto w-full max-w-[720px]"
+                className="mt-8 h-auto w-full max-w-[720px] sm:mt-10"
                 height={683}
                 src="/assets/hero-banner.png"
                 width={3368}
               />
-              <p className="mt-10 text-2xl font-black tracking-[-0.035em] text-white sm:text-4xl">
-                <span className="text-[#45C4DE]">
+              <p className="mt-8 text-xl font-black sm:mt-10 sm:text-2xl tracking-[-0.035em] text-white sm:text-4xl">
+                <span className="text-[#59c3e7]">
                   육·해·공 모빌리티 × AI·데이터
                 </span>
               </p>
-              <p className="mt-6 max-w-[760px] text-lg leading-[1.7] text-white/70 sm:text-xl">
+              <p className="mt-5 max-w-[760px] text-base leading-[1.7] text-white/70 sm:mt-6 sm:text-xl">
                 동남권 혁신클러스터의 특화산업인 멀티도메인 모빌리티 기술과
                 <br />
                 AI·데이터를 융합한 문제해결형 비즈니스 모델을 발굴합니다
               </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <div className="mt-8 flex w-full flex-col justify-center gap-3 min-[480px]:w-auto min-[480px]:flex-row sm:mt-10">
                 <Link
                   className="brand-gradient inline-flex min-h-14 items-center justify-center rounded-full px-7 text-base font-bold text-white"
                   href="/apply"
@@ -228,21 +235,21 @@ export default async function HomePage() {
                   참가 신청하기
                 </Link>
                 <Link
-                  className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#45C4DE] bg-[#0D1E5E] px-7 text-base font-bold text-white hover:bg-[#45C4DE]/20"
+                  className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#59c3e7] bg-[#0D1E5E] px-7 text-base font-bold text-white hover:bg-[#59c3e7]/20"
                   href="/application/login"
                 >
                   신청 확인·수정
                 </Link>
               </div>
             </div>
-            <div className="hero-stats mx-auto mt-20 grid max-w-[1120px] border-t border-[#45C4DE]/55 pt-8 text-center sm:grid-cols-3 sm:gap-6 lg:gap-8">
+            <div className="hero-stats mx-auto mt-12 sm:mt-20 grid max-w-[1120px] border-t border-[#59c3e7]/55 pt-8 text-center sm:grid-cols-3 sm:gap-6 lg:gap-8">
               {[
                 ['접수', '10.08(목) ~ 10. 26.(월) 18:00까지'],
                 ['본선 일정', '11.8.(일) ~ 11.10.(화)'],
                 ['참가 단위', '4인 1팀 (개인·기업부문)'],
               ].map(([label, value]) => (
                 <div
-                  className="border-b border-[#45C4DE]/55 py-5 sm:border-0 sm:py-0"
+                  className="border-b border-[#59c3e7]/55 py-5 sm:border-0 sm:py-0"
                   key={label}
                 >
                   <strong className="block text-sm font-semibold tracking-[-0.05em] text-white sm:text-base">
@@ -256,7 +263,7 @@ export default async function HomePage() {
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="mt-16 h-auto w-full max-w-[900px]"
+              className="mt-10 h-auto w-full max-w-[900px] sm:mt-16"
               src="/assets/organizers.png"
               width={4513}
               height={162}
@@ -265,11 +272,11 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <div className="mx-auto max-w-[1280px] space-y-28 px-5 py-24 sm:px-8 sm:py-32 lg:space-y-40">
+        <div className="mx-auto max-w-[1280px] space-y-20 px-5 py-16 sm:px-8 sm:py-32 lg:space-y-40">
           <section id="contest" className="contest-brief scroll-mt-28">
             <SectionTitle>대회 개요</SectionTitle>
 
-            <div className="contest-brief-content mt-12 grid gap-10 text-lg leading-[1.75] text-white/72 sm:text-xl">
+            <div className="contest-brief-content mt-8 grid gap-8 text-base sm:mt-12 sm:gap-10 sm:text-xl leading-[1.75] text-white/72">
               <div aria-labelledby="contest-purpose">
                 <h3 id="contest-purpose" className="contest-brief-title">
                   배경 및 목적
@@ -350,31 +357,30 @@ export default async function HomePage() {
                 <ul className="mt-5 grid gap-5 lg:grid-cols-3">
                   {regionalIndustries.map((item) => (
                     <li
-                      className="landing-panel interactive-card flex flex-col rounded-[28px] border border-[#45C4DE]/55 p-7"
+                      className="interactive-card relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-[rgba(0,20,80,0.8)] p-6 backdrop-blur-md sm:p-9"
                       key={item.region}
                     >
-                      <p className="text-lg font-semibold text-[#45C4DE]">
-                        {item.region}
-                      </p>
-                      <p className="mt-2 text-2xl font-bold text-white">
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -left-6 -top-2.5 select-none whitespace-nowrap text-[64px] font-bold sm:text-[96px] leading-none text-[rgba(255,255,255,0.3)]"
+                      >
+                        {item.regionEn}
+                      </span>
+                      <p className="relative text-2xl font-bold tracking-[-0.5px] text-white">
                         {item.domain}
                       </p>
-                      <p className="text-sm text-white/50">{item.english}</p>
-                      <ul className="mt-5 grid gap-2 text-base leading-[1.6] text-white/70">
+                      <ul className="relative list-disc pl-[22px] text-[15px] leading-[1.7] tracking-[-0.2px] text-white">
                         {item.description.map((text) => (
-                          <li className="flex items-start gap-2.5" key={text}>
-                            {bullet}
-                            <span>{text}</span>
-                          </li>
+                          <li key={text}>{text}</li>
                         ))}
                       </ul>
-                      <p className="mt-5 text-sm font-semibold text-white/50">
-                        중점 육성분야
+                      <p className="relative text-sm font-bold tracking-[-0.5px] text-white">
+                        중점 육성 분야
                       </p>
-                      <p className="mt-2 flex flex-wrap gap-2">
+                      <p className="relative flex flex-wrap gap-2">
                         {item.focus.map((tag) => (
                           <span
-                            className="rounded-full border border-[#45C4DE]/45 px-3 py-1 text-sm font-semibold text-white/85"
+                            className="rounded-full bg-white/30 p-2 text-sm tracking-[-0.2px] text-white"
                             key={tag}
                           >
                             {tag}
@@ -393,7 +399,7 @@ export default async function HomePage() {
                 <section className={panel}>
                   <div className="grid gap-8 lg:grid-cols-2">
                     <div>
-                      <p className="text-lg font-semibold text-[#45C4DE]">
+                      <p className="text-lg font-semibold text-white">
                         예선대회
                       </p>
                       <dl className="mt-4 grid gap-3">
@@ -408,7 +414,7 @@ export default async function HomePage() {
                       </dl>
                     </div>
                     <div>
-                      <p className="text-lg font-semibold text-[#45C4DE]">
+                      <p className="text-lg font-semibold text-white">
                         본선대회
                       </p>
                       <dl className="mt-4 grid gap-3">
@@ -558,14 +564,17 @@ export default async function HomePage() {
           </section>
         </div>
 
-        <section className="bg-[#111111] px-5 py-24 text-white sm:px-8 sm:py-32">
+        <section className="bg-[#111111] bg-[url('/assets/hero-bg.png')] bg-cover bg-center px-5 py-24 text-white sm:px-8 sm:py-32">
           <div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-10 text-center lg:flex-row lg:items-end lg:text-left">
-            <h2 className="max-w-[800px] text-3xl leading-[1.2] font-black tracking-[-0.04em] sm:text-5xl">
-              2026 동남권
-              <br />
-              <span className="text-[#45C4DE]">멀티도메인 모빌리티</span>
-              <br />
-              비즈니스 해커톤
+            <h2 className="w-full max-w-[520px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt="2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤"
+                className="h-auto w-full"
+                height={1526}
+                src="/assets/hero-logo.png"
+                width={4096}
+              />
             </h2>
             <Link
               className="brand-gradient inline-flex min-h-14 shrink-0 items-center justify-center rounded-full px-8 font-bold"

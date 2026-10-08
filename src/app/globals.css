@@ -74,14 +74,14 @@
 
 :root {
   color-scheme: light;
-  --color-primary: #35c1de;
-  --color-primary-hover: #169fbe;
+  --color-primary: #59c3e7;
+  --color-primary-hover: #3aa8d4;
   --color-primary-deep: #176f9f;
   --color-primary-blue: #4f9fc7;
   --gradient-primary: linear-gradient(
     115deg,
-    #35c1de 0%,
-    #35c1de 38%,
+    #59c3e7 0%,
+    #59c3e7 38%,
     #4aaed0 68%,
     #6bb6d3 100%
   );
@@ -173,15 +173,10 @@ video {
 }
 
 .landing-panel {
-  background-color: rgba(0, 0, 0, 0.3);
-  background-image: radial-gradient(
-    ellipse 75% 115% at 50% 50%,
-    rgba(25, 80, 174, 0.7) 0%,
-    rgba(13, 30, 94, 0.58) 58%,
-    rgba(3, 11, 45, 0.34) 100%
-  );
-  backdrop-filter: blur(2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  background-color: rgba(0, 20, 80, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0;
 }
 
 .contest-brief {
@@ -226,13 +221,13 @@ video {
 
 .contest-brief-table th {
   padding: 0.8rem 0.9rem;
-  color: rgba(255, 255, 255, 0.58);
+  color: #fff;
   font-weight: 700;
 }
 
 .contest-brief-table td {
   padding: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: #fff;
   vertical-align: middle;
   overflow-wrap: anywhere;
   word-break: keep-all;
@@ -244,12 +239,12 @@ video {
 }
 
 .contest-brief-table td strong {
-  color: #45c4de;
+  color: #fff;
 }
 
 .contest-brief-table td span {
   margin-top: 0.1rem;
-  color: rgba(255, 255, 255, 0.42);
+  color: #fff;
   font-size: 0.8125rem;
 }
 
@@ -261,7 +256,7 @@ video {
 .contest-brief-table td .prize-highlight {
   display: inline-block;
   margin-bottom: 0.25rem;
-  color: #45c4de;
+  color: #fff;
   font-family: 'SUIT', Pretendard, sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
@@ -766,5 +761,10 @@ input[type='checkbox'] {
 
 /* 전역 [class*='rounded-'] 규칙(!important)을 피하기 위해 클래스명에 rounded-를 쓰지 않는다. */
 .hero-frame {
-  border-radius: 140px;
+  border-radius: 0;
+}
+@media (min-width: 640px) {
+  .hero-frame {
+    border-radius: 140px;
+  }
 }

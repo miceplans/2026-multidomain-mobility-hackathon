@@ -43,7 +43,7 @@ export function MobileNav() {
         </a>
       ))}
       <Link
-        className="flex min-h-11 items-center rounded-[10px] bg-[#59c3e7] px-[22px] font-semibold text-white sm:ml-[18px]"
+        className="flex min-h-11 items-center rounded-[10px] bg-[#59c3e7] px-[22px] font-semibold text-white transition-colors hover:bg-[#3aa8d4] sm:ml-[18px]"
         href="/apply"
       >
         참가 신청
@@ -52,7 +52,7 @@ export function MobileNav() {
         aria-controls="mobile-nav-panel"
         aria-expanded={open}
         aria-label="메뉴 열기"
-        className="ml-1 flex min-h-11 min-w-11 items-center justify-center rounded-full hover:bg-[#45C4DE]/15 sm:hidden"
+        className="ml-1 flex min-h-11 min-w-11 items-center justify-center rounded-full hover:bg-[#59c3e7]/15 sm:hidden"
         onClick={() => setOpen(true)}
         type="button"
       >
@@ -89,7 +89,7 @@ export function MobileNav() {
             >
               <button
                 aria-label="메뉴 닫기"
-                className="mb-2 flex min-h-11 min-w-11 items-center justify-center self-end rounded-full hover:bg-[#45C4DE]/15"
+                className="mb-2 flex min-h-11 min-w-11 items-center justify-center self-end rounded-full hover:bg-[#59c3e7]/15"
                 onClick={() => setOpen(false)}
                 type="button"
               >
@@ -110,7 +110,7 @@ export function MobileNav() {
               {navLinks.map((link) => (
                 <a
                   key={link.href}
-                  className="flex min-h-11 items-center rounded-lg px-3 text-base text-white hover:bg-[#45C4DE]/15"
+                  className="flex min-h-11 items-center rounded-lg px-3 text-base text-white hover:bg-[#59c3e7]/15"
                   href={link.href}
                   onClick={() => setOpen(false)}
                 >
@@ -119,7 +119,7 @@ export function MobileNav() {
               ))}
               <div className="my-2" />
               <Link
-                className="flex min-h-11 items-center rounded-lg px-3 text-base text-white hover:bg-[#45C4DE]/15"
+                className="flex min-h-11 items-center rounded-lg px-3 text-base text-white hover:bg-[#59c3e7]/15"
                 href="/application/login"
                 onClick={() => setOpen(false)}
               >
