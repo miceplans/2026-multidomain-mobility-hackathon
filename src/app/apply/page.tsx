@@ -194,7 +194,7 @@ export default function ApplyPage() {
                     onChange={(e) => setApplicantType(e.target.value)}
                     className="size-4"
                   />
-                  {type === '기업' ? '기업 참가' : '일반(개인) 참가'}
+                  {type === '기업' ? '기업 참가' : '개인 참가'}
                 </label>
               ))}
             </div>
@@ -248,9 +248,13 @@ export default function ApplyPage() {
             ))}
           </ul>
         </Section>
-        <Section title="팀 정보">
+        <Section title={applicantType === '기업' ? '회사(팀 정보)' : '팀 정보'}>
           <Grid>
-            <Field name="teamName" label="팀명" autoComplete="username" />
+            <Field
+              name="teamName"
+              label={applicantType === '기업' ? '회사명' : '팀명'}
+              autoComplete="username"
+            />
           </Grid>
           <p className="text-xs text-[#666]">
             신청 확인 비밀번호는 아래에 입력하는 팀장 연락처의 뒤 4자리로 자동

@@ -217,7 +217,12 @@ export default function Page() {
           disabled={!editable}
           className="service-card grid gap-5 rounded-2xl p-5 sm:grid-cols-2 sm:p-7"
         >
-          <F n="teamName" l="팀명" v={app.team_name} autoComplete="username" />
+          <F
+            n="teamName"
+            l={applicantType === '기업' ? '회사명' : '팀명'}
+            v={app.team_name}
+            autoComplete="username"
+          />
           <F
             n="leaderName"
             l="팀장 이름"
