@@ -127,7 +127,7 @@ export default function Page() {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="h-11 min-w-64 flex-1 rounded-[10px] border border-[#e5e5e5] bg-white px-4 text-sm text-[#111] outline-none placeholder:text-[#b9b9b9] focus:border-[#35c1de] focus:ring-2 focus:ring-[#35c1de]/10"
+            className="h-11 min-w-64 flex-1 rounded-[10px] border border-[#e5e5e5] bg-white px-4 text-sm text-[#111] outline-none placeholder:text-[#b9b9b9] focus:border-[#59c3e7] focus:ring-2 focus:ring-[#59c3e7]/10"
           />
           <a
             href="/api/admin/excel/export"
@@ -196,7 +196,7 @@ export default function Page() {
                 >
                   <td className="p-3 pl-4 font-mono text-xs whitespace-nowrap text-[#666]">
                     <Link
-                      className="font-bold text-[#176f9f] underline decoration-[#35c1de]/30 underline-offset-2 hover:decoration-[#35c1de]"
+                      className="font-bold text-[#176f9f] underline decoration-[#59c3e7]/30 underline-offset-2 hover:decoration-[#59c3e7]"
                       href={`/admin/applications/${x.id}`}
                       onClick={(e) => e.stopPropagation()}
                     >

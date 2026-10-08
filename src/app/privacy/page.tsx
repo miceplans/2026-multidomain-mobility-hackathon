@@ -217,8 +217,15 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-white text-[#191f28]">
       <header className="border-b border-black/8 bg-white px-5 sm:px-8">
         <div className="mx-auto flex min-h-[72px] max-w-[1000px] items-center justify-between gap-4">
-          <Link className="font-extrabold tracking-[-0.035em]" href="/">
-            2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
+          <Link className="flex min-h-11 items-center" href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt="2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤"
+              className="h-auto w-[110px] brightness-0 sm:w-[130px]"
+              height={1526}
+              src="/assets/hero-logo.png"
+              width={4096}
+            />
           </Link>
         </div>
       </header>
