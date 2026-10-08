@@ -15,7 +15,7 @@ export function ContestHeader({
 }) {
   return (
     <header
-      className={`motion-section sticky top-0 z-20 flex min-h-[72px] justify-between border-b border-black/5 bg-white/90 px-5 py-3 backdrop-blur-xl sm:flex-row sm:items-center sm:px-8 lg:px-10 ${
+      className={`motion-section sticky top-0 z-20 flex min-h-[72px] justify-between bg-[#010622] px-5 py-3 sm:flex-row sm:items-center sm:px-8 lg:px-10 ${
         singleLineMobile
           ? 'flex-row items-center gap-2'
           : 'flex-col items-stretch gap-3'
@@ -25,7 +25,7 @@ export function ContestHeader({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt="2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤"
-          className={`h-auto brightness-0 ${singleLineMobile ? 'w-[130px]' : 'w-[170px]'} sm:w-[190px]`}
+          className="h-auto w-[110px] sm:w-[130px]"
           height={1526}
           src="/assets/hero-logo.png"
           width={4096}
@@ -38,7 +38,7 @@ export function ContestHeader({
           }`}
         >
           {helper && (
-            <span className="hidden text-sm text-[#666] md:block">
+            <span className="hidden text-sm text-white/70 md:block">
               {helper}
             </span>
           )}
@@ -46,7 +46,7 @@ export function ContestHeader({
             <Link
               key={link.href}
               href={link.href}
-              className="motion-control inline-flex min-h-11 min-w-0 items-center justify-center rounded-[8px] border border-[#e5e5e5] px-4 py-2 text-sm font-bold text-[#333d4b] hover:bg-[#f2f4f6] sm:px-[18px]"
+              className="motion-control inline-flex min-h-11 min-w-0 items-center justify-center rounded-[8px] border border-white/20 px-4 py-2 text-sm font-bold text-white hover:bg-white/10 sm:px-[18px]"
             >
               {link.label}
             </Link>
@@ -54,7 +54,7 @@ export function ContestHeader({
           {actionLabel && (
             <Link
               href={actionHref}
-              className={`motion-control inline-flex min-h-11 min-w-0 items-center justify-center rounded-[8px] bg-[#f2f4f6] py-2 text-sm font-bold text-[#333d4b] hover:bg-[#e5e8eb] sm:px-[18px] ${
+              className={`motion-control inline-flex min-h-11 min-w-0 items-center justify-center rounded-[8px] bg-white/10 py-2 text-sm font-bold text-white hover:bg-white/20 sm:px-[18px] ${
                 singleLineMobile ? 'px-3' : 'px-4'
               }`}
             >
