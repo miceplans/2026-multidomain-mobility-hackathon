@@ -183,7 +183,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="absolute right-0 bottom-[40%] h-auto w-[68%] sm:bottom-[26%] sm:w-[40%]"
+                  className="absolute bottom-[40%] left-1/2 h-auto w-[68%] -translate-x-1/2 sm:bottom-[26%] sm:w-[40%]"
                   height={1024}
                   src="/assets/hero-ship.png"
                   width={1536}
@@ -191,7 +191,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="absolute top-[10%] left-1/2 h-auto w-[72%] -translate-x-1/2 sm:top-[12%] sm:w-[52%]"
+                  className="absolute top-[10%] left-1/2 h-auto w-[58%] -translate-x-1/2 sm:top-[12%] sm:w-[42%]"
                   height={1526}
                   src="/assets/hero-logo.png"
                   width={4096}
