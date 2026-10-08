@@ -18,23 +18,33 @@ export function SiteFooter() {
             <div className="mt-2 flex flex-col gap-1">
               <a
                 className="w-fit text-lg font-bold underline decoration-white/30 underline-offset-4 hover:decoration-white"
-                href="tel:0518668702"
+                href="tel:0518668708"
               >
-                051-866-8702, 8708
+                051-866-8708
               </a>
               <p className="text-sm text-white/60">
-                대회 사무국: 추후 별도 안내
+                대회 사무국: 동남권지역혁신클러스터 홈페이지(
+                <a
+                  className="underline underline-offset-2 hover:text-white"
+                  href="https://gncluster.or.kr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  gncluster.or.kr
+                </a>
+                ) 내 대회 메뉴 참조
               </p>
             </div>
           </div>
 
-          <div className="text-sm leading-6 text-white/60">
-            <p>주최 산업통상부 · 부산광역시 · 울산광역시 · 경상남도</p>
-            <p>주관 한국산업기술진흥원 · 동남권지역혁신융복합단지추진단</p>
-            <p>
-              공동 운영 부산테크노파크 · 울산지역산업진흥원 · 경남테크노파크
-            </p>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="h-auto w-full max-w-[640px]"
+            src="/assets/organizers.png"
+            width={4513}
+            height={162}
+            alt="주최 산업통상부, 부산광역시, 울산광역시, 경상남도 / 주관 한국산업기술진흥원, 동남권지역혁신융복합단지추진단 / 공동 운영 부산테크노파크, 울산지역산업진흥원, 경남테크노파크"
+          />
         </div>
 
         <div className="flex flex-col gap-4 pt-8 text-xs leading-6 text-white/55 sm:flex-row sm:items-center sm:justify-between">

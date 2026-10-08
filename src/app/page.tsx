@@ -10,12 +10,12 @@ export const dynamic = 'force-dynamic';
 const awards = [
   ['본선 진출작', '본선 참가경비(부산-오사카 크루즈 승선료 등) 전액 지원'],
   [
-    '본선 우수작',
-    '동남권 광역자치단체장상(부산광역시장, 울산광역시장, 경상남도지사), 시도별 테크노파크원장상 등 수여 예정',
+    '개인부문 우수작',
+    '동남권 광역자치단체장상(부산광역시장, 울산광역시장, 경상남도지사) \n 시도별 테크노파크원장상 등 수여 예정',
   ],
   [
     '기업부문 우수작',
-    "'27년 동남권 지역혁신클러스터육성(비R&D)사업 기업지원 세부 프로그램 우선지원 예정",
+    "기업부문 사업화지원금 최대 7억5천만원 이내 \n 27년 동남권 지역혁신클러스터육성(비R&D)사업 기업지원 세부 프로그램 우선지원 예정",
   ],
 ];
 
@@ -45,7 +45,7 @@ const participantTypes = [
   },
   {
     category: '기업부문',
-    target: '동남권 소재 중견·중소기업 1~2개사 (4인 1팀 구성)',
+    target: '동남권(부산·울산·경남) 소재 중소기업 또는 중견기업 1~2개사 내외로 구성 (본점 외 동남권 소재 지점·연구소, 공장도 사업장으로 인정)',
     notes: [
       '팀장 1명 및 팀원 3명 구성',
       '기업 재직자 및 대학(원)생 참여 가능',
@@ -100,22 +100,16 @@ const preliminaryPlan = [
 const finalPlan = [
   ['대회일정', '2026. 11. 8.(일) ~ 11. 10.(화)'],
   ['대회장소', '부산 아스티호텔, 팬스타미라클호, 일본 오사카항 일원'],
-  ['평가방법', '중간심사 및 최종심사 (발표 및 질의응답 평가)'],
+  ['평가방법', '최종심사 (발표 및 질의응답 평가)'],
 ];
 
 const schedule = [
-  {
-    step: '사업공고 및 홍보',
-    period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지',
-  },
+  { step: '사업공고 및 홍보', period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지' },
   { step: '신청접수', period: '신청서 및 컨셉기획안' },
   { step: '예선 심사', period: "'26. 10월 4주차 예정 (서면심사)" },
   { step: '본선 참가팀 선정결과 발표', period: "'26. 11월 1주차 예정" },
   { step: '본선 대회', period: "'26. 11. 8.(일) ~ 11. 10.(화)" },
-  {
-    step: '본선 심사',
-    period: "중간심사 '26. 11. 9.(월) / 최종심사 '26. 11. 10.(화)",
-  },
+  { step: '본선 심사', period: "최종심사 '26. 11. 10.(화)" },
   { step: '시상식', period: "'26. 11. 10.(화)" },
 ];
 
@@ -126,6 +120,7 @@ const notices = [
   '팀원 중 출입국 불허자 발생 시 팀 전원의 대회 참여가 제한될 수 있으며, 이는 참가자 본인의 귀책으로 간주합니다.',
   '상기 일정은 대회 진행 경과에 따라 일부 변경될 수 있으며, 변경 시 추후 대회 홈페이지 등을 통해 공지합니다.',
 ];
+
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -153,14 +148,16 @@ export default async function HomePage() {
   );
 
   return (
-    <div className="landing-high-contrast min-h-screen bg-[#05070f] bg-[url('/assets/bg-mobile.webp')] bg-cover bg-fixed bg-center text-white sm:bg-[url('/assets/bg-desktop.webp')]">
-      <header className="sticky top-0 z-20 border-b border-[#45C4DE]/35 bg-[#0D1E5E]/80 backdrop-blur-xl">
-        <div className="relative mx-auto flex min-h-[76px] max-w-[1280px] items-center justify-between gap-4 px-5 sm:px-8">
+    <div className="landing-high-contrast min-h-screen bg-[#05070f] text-white">
+      <header className="sticky top-0 z-20 bg-[#010622]">
+        <div className="relative flex items-center justify-between gap-4 px-5 py-[22px] sm:px-8 lg:px-[120px]">
           <Link
-            className="flex min-h-11 items-center text-base font-semibold tracking-[-0.045em] sm:text-xl"
+            className="flex min-h-11 items-center text-base font-bold sm:text-[17px]"
             href="/"
           >
-            2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
+            <span className="block leading-tight sm:inline">2026 동남권</span>{" "}
+            <span className="block leading-tight sm:inline">멀티도메인 모빌리티</span>{" "}
+            <span className="block leading-tight sm:inline">비즈니스 해커톤</span>
           </Link>
           <MobileNav />
         </div>
@@ -173,11 +170,27 @@ export default async function HomePage() {
               <p className="text-sm font-semibold text-white/60 sm:text-base">
                 산업통상부 「2026년 지역혁신클러스터육성(비R&D)사업」
               </p>
-              <h1 className="mt-6 flex w-full flex-col items-center text-[clamp(2.25rem,6vw,4.75rem)] leading-[1.08] font-black tracking-[-0.055em]">
-                <span>2026 동남권</span>
-                <span className="text-[#45C4DE]">멀티도메인 모빌리티</span>
-                <span>비즈니스 해커톤</span>
+              <h1 className="mt-6 w-full">
+                <span className="sr-only">
+                  2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
+                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  className="mx-auto h-auto w-full max-w-[617px]"
+                  height={1526}
+                  src="/assets/hero-logo.png"
+                  width={4096}
+                />
               </h1>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt=""
+                className="-mt-6 h-auto w-full max-w-[1055px] sm:-mt-12"
+                height={1024}
+                src="/assets/hero-ship.png"
+                width={1536}
+              />
               <p className="mt-10 text-2xl font-black tracking-[-0.035em] text-white sm:text-4xl">
                 <span className="text-[#45C4DE]">
                   육·해·공 모빌리티 × AI·데이터
@@ -205,7 +218,7 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats mx-auto mt-20 grid max-w-[1120px] border-t border-[#45C4DE]/55 pt-8 text-center sm:grid-cols-3 sm:gap-6 lg:gap-8">
               {[
-                ['접수', "10월 중 공고 예정('26)"],
+                ['접수', "10.08(목) ~ 10. 26.(월) 18:00까지"],
                 ['본선 일정', '11.8.(일) ~ 11.10.(화)'],
                 ['참가 단위', '4인 1팀 (개인·기업부문)'],
               ].map(([label, value]) => (
@@ -222,13 +235,14 @@ export default async function HomePage() {
                 </div>
               ))}
             </div>
-            <p className="mt-16 text-sm leading-[1.7] text-white/55 sm:text-base">
-              주최 산업통상부 · 부산광역시 · 울산광역시 · 경상남도
-              <br />
-              주관 한국산업기술진흥원 · 동남권지역혁신융복합단지추진단
-              <br />
-              공동 운영 부산테크노파크 · 울산지역산업진흥원 · 경남테크노파크
-            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="mt-16 h-auto w-full max-w-[900px]"
+              src="/assets/organizers.png"
+              width={4513}
+              height={162}
+              alt="주최 산업통상부, 부산광역시, 울산광역시, 경상남도 / 주관 한국산업기술진흥원, 동남권지역혁신융복합단지추진단 / 공동 운영 부산테크노파크, 울산지역산업진흥원, 경남테크노파크"
+            />
           </div>
         </section>
 
@@ -304,6 +318,9 @@ export default async function HomePage() {
                       </tbody>
                     </table>
                   </div>
+                  <p className="mt-4 text-base text-white/85">
+                    * 동남권의 기업의 경우 동남권 기업과 컨소시엄 참여 가능
+                  </p>
                 </section>
               </div>
 
@@ -400,7 +417,7 @@ export default async function HomePage() {
                 </h3>
                 <section className={panel}>
                   <div className="overflow-x-auto">
-                    <table className="contest-brief-table min-w-[620px]">
+                    <table className="contest-brief-table">
                       <thead>
                         <tr>
                           <th>단계</th>
@@ -430,7 +447,7 @@ export default async function HomePage() {
                 </h3>
                 <section className={panel}>
                   <div className="overflow-x-auto">
-                    <table className="contest-brief-table contest-awards-table min-w-[620px]">
+                    <table className="contest-brief-table contest-awards-table">
                       <thead>
                         <tr>
                           <th>구분</th>
@@ -441,12 +458,21 @@ export default async function HomePage() {
                         {awards.map(([rank, benefit]) => (
                           <tr key={rank}>
                             <td>{rank}</td>
-                            <td>{benefit}</td>
+                            <td>
+                              {benefit.split('\n').map((line, index) => (
+                                <div className="whitespace-normal" key={index}>
+                                  {line.trim()}
+                                </div>
+                              ))}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
+                  <p className="mt-4 text-base text-white/85">
+                    개인부문 총상금 1,500만원
+                  </p>
                 </section>
               </div>
 
@@ -475,7 +501,19 @@ export default async function HomePage() {
             <p className="mt-5 text-lg leading-[1.7] text-white/70 sm:text-xl">
               (재)부산테크노파크 정책기획단 미래전략팀
               <br />
-              051-866-8702, 8708
+              <a
+                className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                href="tel:0518668702"
+              >
+                051-866-8702
+              </a>
+              ,{' '}
+              <a
+                className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                href="tel:0518668708"
+              >
+                8708
+              </a>
               <br />
               대회 사무국: 추후 별도 안내
             </p>
