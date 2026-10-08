@@ -98,7 +98,7 @@ const regionalIndustries = [
 
 const preliminaryPlan = [
   ['신청방법', '소정양식에 따라 참가신청서, 컨셉기획안 온라인 접수'],
-  ['예상일정', '10월 중 공고 및 접수 마감'],
+  ['접수마감', '2026.10.26. 18:00'],
   ['평가방법', '서면심사'],
   ['본선진출 선정규모', '개인 및 기업부문 각 12팀 내외'],
 ];
@@ -378,7 +378,7 @@ export default async function HomePage() {
                     </table>
                   </div>
                   <p className="mt-4 text-base text-white/85">
-                    * 동남권의 기업의 경우 동남권 기업과 컨소시엄 참여 가능
+                    * 동남권 소재 기업(주관기업)은 동남권 기업 또는 타 지역 기업과 컨소시엄으로 신청가능
                   </p>
                 </section>
               </div>
