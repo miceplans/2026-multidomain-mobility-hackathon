@@ -568,7 +568,7 @@ export default async function HomePage() {
           <section id="contact" className="scroll-mt-28">
             <SectionTitle>문의하기</SectionTitle>
             <p className="mt-5 text-lg leading-[1.7] text-white/70 sm:text-xl">
-              (재)부산테크노파크 정책기획단 미래전략팀
+              대회사무국
               <br />
               <a
                 className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
@@ -583,8 +583,6 @@ export default async function HomePage() {
               >
                 office1170@naver.com
               </a>
-              <br />
-              대회 사무국: 추후 별도 안내
             </p>
             <div className="mt-8">
               <a
