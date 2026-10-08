@@ -11,7 +11,7 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
         자주 묻는 질문
       </h2>
       {faqs.length === 0 ? (
-        <p className="faq-item mt-12 border-y border-[#45C4DE]/45 p-7 text-lg leading-[1.7] text-white/60 sm:p-10 sm:text-xl">
+        <p className="faq-item mt-12 p-7 text-lg leading-[1.7] text-white/60 sm:p-10 sm:text-xl">
           등록된 자주 묻는 질문이 없습니다.
         </p>
       ) : (
@@ -19,10 +19,7 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
           {faqs.map((faq, index) => {
             const open = openIndex === index;
             return (
-              <div
-                key={index}
-                className="faq-item overflow-hidden border-y border-[#45C4DE]/45"
-              >
+              <div key={index} className="faq-item overflow-hidden">
                 <button
                   type="button"
                   aria-expanded={open}
@@ -47,7 +44,7 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
                   aria-labelledby={`faq-question-${index}`}
                   hidden={!open}
                 >
-                  <p className="border-t border-[#45C4DE]/35 px-6 py-6 text-lg leading-[1.75] whitespace-pre-line text-white/75 sm:px-8 sm:text-xl">
+                  <p className="px-6 py-6 text-lg leading-[1.75] whitespace-pre-line text-white/75 sm:px-8 sm:text-xl">
                     {faq.answer}
                   </p>
                 </div>

@@ -226,21 +226,16 @@ video {
 
 .contest-brief-table th {
   padding: 0.8rem 0.9rem;
-  border-bottom: 1px solid rgba(69, 196, 222, 0.45);
   color: rgba(255, 255, 255, 0.58);
   font-weight: 700;
 }
 
 .contest-brief-table td {
   padding: 0.9rem;
-  border-bottom: 1px solid rgba(69, 196, 222, 0.2);
   color: rgba(255, 255, 255, 0.85);
   vertical-align: middle;
-}
-
-.contest-brief-table td:first-child,
-.contest-brief-table td:nth-last-child(-n + 2) {
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
 }
 
 .contest-brief-table td strong,
@@ -261,7 +256,6 @@ video {
 .contest-brief-table.contest-awards-table th,
 .contest-brief-table.contest-awards-table td {
   text-align: center;
-  white-space: nowrap;
 }
 
 .contest-evaluation-table td {

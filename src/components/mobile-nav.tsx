@@ -31,19 +31,19 @@ export function MobileNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="flex items-center gap-1 text-sm font-bold"
+      className="flex items-center text-[15px]"
     >
       {navLinks.map((link) => (
         <a
           key={link.href}
-          className="hidden min-h-11 items-center rounded-full px-4 hover:bg-[#45C4DE]/15 sm:flex"
+          className="hidden min-h-11 items-center px-[18px] font-normal text-[#767676] hover:text-white sm:flex"
           href={link.href}
         >
           {link.label}
         </a>
       ))}
       <Link
-        className="brand-gradient flex min-h-11 items-center rounded-full px-5 text-white"
+        className="flex min-h-11 items-center rounded-[10px] bg-[#59c3e7] px-[22px] font-semibold text-white sm:ml-[18px]"
         href="/apply"
       >
         참가 신청
@@ -52,7 +52,7 @@ export function MobileNav() {
         aria-controls="mobile-nav-panel"
         aria-expanded={open}
         aria-label="메뉴 열기"
-        className="flex min-h-11 min-w-11 items-center justify-center rounded-full hover:bg-[#45C4DE]/15 sm:hidden"
+        className="ml-1 flex min-h-11 min-w-11 items-center justify-center rounded-full hover:bg-[#45C4DE]/15 sm:hidden"
         onClick={() => setOpen(true)}
         type="button"
       >
@@ -82,7 +82,7 @@ export function MobileNav() {
               onClick={() => setOpen(false)}
             />
             <div
-              className={`fixed top-0 right-0 z-50 flex h-dvh w-[78%] max-w-[320px] flex-col gap-1 overflow-y-auto border-l border-[#45C4DE]/35 bg-[#0D1E5E] px-5 py-4 shadow-xl transition-transform duration-300 sm:hidden ${
+              className={`fixed top-0 right-0 z-50 flex h-dvh w-[78%] max-w-[320px] flex-col gap-1 overflow-y-auto bg-[#0D1E5E] px-5 py-4 shadow-xl transition-transform duration-300 sm:hidden ${
                 open ? 'translate-x-0' : 'translate-x-full'
               }`}
               id="mobile-nav-panel"
@@ -117,7 +117,7 @@ export function MobileNav() {
                   {link.label}
                 </a>
               ))}
-              <div className="my-2 border-t border-[#45C4DE]/25" />
+              <div className="my-2" />
               <Link
                 className="flex min-h-11 items-center rounded-lg px-3 text-base text-white hover:bg-[#45C4DE]/15"
                 href="/application/login"
