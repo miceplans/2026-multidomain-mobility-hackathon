@@ -572,16 +572,16 @@ export default async function HomePage() {
               <br />
               <a
                 className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
-                href="tel:0518668702"
+                href="tel:07046181565"
               >
-                051-866-8702
+                070-4618-1565
               </a>
-              ,{' '}
+              <br />
               <a
                 className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
-                href="tel:0518668708"
+                href="mailto:office1170@naver.com"
               >
-                8708
+                office1170@naver.com
               </a>
               <br />
               대회 사무국: 추후 별도 안내
@@ -589,7 +589,7 @@ export default async function HomePage() {
             <div className="mt-8">
               <a
                 className="brand-gradient inline-flex min-h-14 items-center justify-center rounded-full px-8 text-base font-bold text-white"
-                href="tel:0518668702"
+                href="tel:07046181565"
               >
                 전화 문의하기
               </a>

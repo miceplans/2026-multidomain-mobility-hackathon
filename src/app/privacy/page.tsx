@@ -188,8 +188,17 @@ const policySections = [
           <dd>(재)부산테크노파크 정책기획단 미래전략팀</dd>
           <dt className="font-bold">전화</dt>
           <dd>
-            <a className="underline underline-offset-4" href="tel:0518668708">
-              051-866-8708
+            <a className="underline underline-offset-4" href="tel:07046181565">
+              070-4618-1565
+            </a>
+          </dd>
+          <dt className="font-bold">이메일</dt>
+          <dd>
+            <a
+              className="underline underline-offset-4"
+              href="mailto:office1170@naver.com"
+            >
+              office1170@naver.com
             </a>
           </dd>
         </dl>

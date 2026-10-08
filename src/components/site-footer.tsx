@@ -18,9 +18,15 @@ export function SiteFooter() {
             <div className="mt-2 flex flex-col gap-1">
               <a
                 className="w-fit text-lg font-bold underline decoration-white/30 underline-offset-4 hover:decoration-white"
-                href="tel:0518668708"
+                href="tel:07046181565"
               >
-                051-866-8708
+                070-4618-1565
+              </a>
+              <a
+                className="w-fit text-base underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                href="mailto:office1170@naver.com"
+              >
+                office1170@naver.com
               </a>
               <p className="text-sm text-white/60">
                 대회 사무국: 동남권지역혁신클러스터 홈페이지(
