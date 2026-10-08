@@ -46,9 +46,9 @@ export function SiteFooter() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="h-auto w-full max-w-[640px]"
-            src="/assets/multidomain_final_logo.webp"
-            width={4489}
-            height={162}
+            src="/assets/멀티도메인_최종로고.png"
+            width={2245}
+            height={244}
             alt="주최 산업통상부, 부산광역시, 울산광역시, 경상남도 / 주관 한국산업기술진흥원, 동남권지역혁신융복합단지추진단 / 공동 운영 부산테크노파크, 울산지역산업진흥원, 경남테크노파크"
           />
         </div>
