@@ -73,7 +73,7 @@ const participantTypes = [
   {
     category: '기업부문',
     target:
-      '동남권(부산·울산·경남) 소재 중소기업 또는 중견기업 1~2개사 내외로 구성 (본점 외 동남권 소재 지점·연구소, 공장도 사업장으로 인정)',
+      '동남권(부산·울산·경남) 사업장 소재 중소·중견기업 1~2개사 내외로 구성(본점,지점, 연구소, 공장 인정)\n주관으로 신청하는 동남권 소재 기업은 타 지역 소재 기업과 컨소시엄 구성 가능(2개사 컨소시엄 구성시)',
     notes: [
       '팀장 1명 및 팀원 3명 구성',
       '기업 재직자 및 대학(원)생 참여 가능',
@@ -302,7 +302,7 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats mx-auto mt-12 sm:mt-20 grid max-w-[1120px] border-t border-[#59c3e7]/55 pt-8 text-center sm:grid-cols-3 sm:gap-6 lg:gap-8">
               {[
-                ['접수', '10.08(목) ~ 10. 26.(월) 18:00까지'],
+                ['접수', ' ~ 10. 26.(월) 18:00까지'],
                 ['본선 일정', '11.8.(일) ~ 11.10.(화)'],
                 ['참가 단위', '4인 1팀 (개인·기업부문)'],
               ].map(([label, value]) => (
@@ -402,9 +402,6 @@ export default async function HomePage() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="mt-4 text-base text-white/85">
-                    * 동남권 소재 기업(주관기업)은 동남권 기업 또는 타 지역 기업과 컨소시엄으로 신청가능
-                  </p>
                 </section>
               </div>
 
