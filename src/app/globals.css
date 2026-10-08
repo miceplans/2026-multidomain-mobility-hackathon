@@ -258,6 +258,23 @@ video {
   text-align: center;
 }
 
+.contest-brief-table td .prize-highlight {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  color: #45c4de;
+  font-family: 'SUIT', Pretendard, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+  .contest-brief-table td .prize-highlight {
+    font-size: 1.875rem;
+  }
+}
+
 .contest-evaluation-table td {
   white-space: normal;
 }
@@ -745,4 +762,9 @@ input[type='checkbox'] {
   a {
     min-height: 44px;
   }
+}
+
+/* 전역 [class*='rounded-'] 규칙(!important)을 피하기 위해 클래스명에 rounded-를 쓰지 않는다. */
+.hero-frame {
+  border-radius: 140px;
 }

@@ -1,21 +1,24 @@
 import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { FaqSection } from '@/components/faq-section';
+import { HeroShip } from '@/components/hero-ship';
 import { MobileNav } from '@/components/mobile-nav';
 import { getSettings } from '@/lib/settings';
 import type { FaqItem } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
+const prizePattern = /(총상금 [\d,]+만원|사업화지원금 최대 [\d억천만원]+ 이내)/;
+
 const awards = [
   ['본선 진출작', '본선 참가경비(부산-오사카 크루즈 승선료 등) 전액 지원'],
   [
     '개인부문 우수작',
-    '동남권 광역자치단체장상(부산광역시장, 울산광역시장, 경상남도지사) \n 시도별 테크노파크원장상 등 수여 예정',
+    '개인부문 총상금 1,500만원 \n 동남권 광역자치단체장상(부산광역시장, 울산광역시장, 경상남도지사) \n 시도별 테크노파크원장상 등 수여 예정',
   ],
   [
     '기업부문 우수작',
-    "기업부문 사업화지원금 최대 7억5천만원 이내 \n 27년 동남권 지역혁신클러스터육성(비R&D)사업 기업지원 세부 프로그램 우선지원 예정",
+    '사업화지원금 최대 7억5천만원 이내 \n 27년 동남권 지역혁신클러스터육성(비R&D)사업 기업지원 세부 프로그램 우선지원 예정',
   ],
 ];
 
@@ -45,7 +48,8 @@ const participantTypes = [
   },
   {
     category: '기업부문',
-    target: '동남권(부산·울산·경남) 소재 중소기업 또는 중견기업 1~2개사 내외로 구성 (본점 외 동남권 소재 지점·연구소, 공장도 사업장으로 인정)',
+    target:
+      '동남권(부산·울산·경남) 소재 중소기업 또는 중견기업 1~2개사 내외로 구성 (본점 외 동남권 소재 지점·연구소, 공장도 사업장으로 인정)',
     notes: [
       '팀장 1명 및 팀원 3명 구성',
       '기업 재직자 및 대학(원)생 참여 가능',
@@ -104,7 +108,10 @@ const finalPlan = [
 ];
 
 const schedule = [
-  { step: '사업공고 및 홍보', period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지' },
+  {
+    step: '사업공고 및 홍보',
+    period: '동남권지역혁신융복합단지추진단 주관사별 홈페이지 및 대회 홈페이지',
+  },
   { step: '신청접수', period: '신청서 및 컨셉기획안' },
   { step: '예선 심사', period: "'26. 10월 4주차 예정 (서면심사)" },
   { step: '본선 참가팀 선정결과 발표', period: "'26. 11월 1주차 예정" },
@@ -120,7 +127,6 @@ const notices = [
   '팀원 중 출입국 불허자 발생 시 팀 전원의 대회 참여가 제한될 수 있으며, 이는 참가자 본인의 귀책으로 간주합니다.',
   '상기 일정은 대회 진행 경과에 따라 일부 변경될 수 있으며, 변경 시 추후 대회 홈페이지 등을 통해 공지합니다.',
 ];
-
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -155,41 +161,54 @@ export default async function HomePage() {
             className="flex min-h-11 items-center text-base font-bold sm:text-[17px]"
             href="/"
           >
-            <span className="block leading-tight sm:inline">2026 동남권</span>{" "}
-            <span className="block leading-tight sm:inline">멀티도메인 모빌리티</span>{" "}
-            <span className="block leading-tight sm:inline">비즈니스 해커톤</span>
+            <span className="block leading-tight sm:inline">2026 동남권</span>{' '}
+            <span className="block leading-tight sm:inline">
+              멀티도메인 모빌리티
+            </span>{' '}
+            <span className="block leading-tight sm:inline">
+              비즈니스 해커톤
+            </span>
           </Link>
           <MobileNav />
         </div>
       </header>
 
       <main>
-        <section className="relative overflow-hidden px-5 py-20 text-center sm:px-8 sm:py-28 lg:py-32">
+        <section className="relative overflow-hidden px-5 pt-16 pb-20 text-center sm:px-8 sm:pt-20 sm:pb-28 lg:pb-32">
           <div className="relative z-1 mx-auto max-w-[1280px]">
-            <div className="hero-copy mx-auto flex max-w-[980px] flex-col items-center">
-              <p className="text-sm font-semibold text-white/60 sm:text-base">
-                산업통상부 「2026년 지역혁신클러스터육성(비R&D)사업」
-              </p>
-              <h1 className="mt-6 w-full">
+            <div className="hero-copy mx-auto flex max-w-[1280px] flex-col items-center">
+              <h1 className="relative aspect-[1440/842] w-screen max-w-none">
                 <span className="sr-only">
                   2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
                 </span>
+                <div className="absolute top-0 bottom-[calc(10%+100px)] left-[8%] w-[84%] overflow-hidden hero-frame">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    alt=""
+                    className="w-full object-cover"
+                    style={{ height: '100%' }}
+                    height={728}
+                    src="/assets/hero-bg.png"
+                    width={2160}
+                  />
+                </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="mx-auto h-auto w-full max-w-[617px]"
+                  className="absolute top-[17.8%] left-[9.2%] h-auto w-[42.8%]"
                   height={1526}
                   src="/assets/hero-logo.png"
                   width={4096}
                 />
+                <HeroShip />
               </h1>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                alt=""
-                className="-mt-6 h-auto w-full max-w-[1055px] sm:-mt-12"
-                height={1024}
-                src="/assets/hero-ship.png"
-                width={1536}
+                alt="부산↔오사카를 왕복하는 무박 3일간의 선상 크루즈 해커톤"
+                className="mt-10 h-auto w-full max-w-[720px]"
+                height={683}
+                src="/assets/hero-banner.png"
+                width={3368}
               />
               <p className="mt-10 text-2xl font-black tracking-[-0.035em] text-white sm:text-4xl">
                 <span className="text-[#45C4DE]">
@@ -218,7 +237,7 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats mx-auto mt-20 grid max-w-[1120px] border-t border-[#45C4DE]/55 pt-8 text-center sm:grid-cols-3 sm:gap-6 lg:gap-8">
               {[
-                ['접수', "10.08(목) ~ 10. 26.(월) 18:00까지"],
+                ['접수', '10.08(목) ~ 10. 26.(월) 18:00까지'],
                 ['본선 일정', '11.8.(일) ~ 11.10.(화)'],
                 ['참가 단위', '4인 1팀 (개인·기업부문)'],
               ].map(([label, value]) => (
@@ -461,7 +480,21 @@ export default async function HomePage() {
                             <td>
                               {benefit.split('\n').map((line, index) => (
                                 <div className="whitespace-normal" key={index}>
-                                  {line.trim()}
+                                  {line
+                                    .trim()
+                                    .split(prizePattern)
+                                    .map((part, i) =>
+                                      i % 2 === 1 ? (
+                                        <strong
+                                          className="prize-highlight"
+                                          key={i}
+                                        >
+                                          {part}
+                                        </strong>
+                                      ) : (
+                                        part
+                                      ),
+                                    )}
                                 </div>
                               ))}
                             </td>
@@ -470,9 +503,6 @@ export default async function HomePage() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="mt-4 text-base text-white/85">
-                    개인부문 총상금 1,500만원
-                  </p>
                 </section>
               </div>
 
