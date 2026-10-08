@@ -3,12 +3,8 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ContestHeader, fieldClass } from '@/components/contest-header';
 import { formatPhoneNumber } from '@/validations';
-import {
-  GENDERS,
-  INDUSTRIES,
-  INFORMATION_SOURCES,
-  PARTICIPATION_TYPES,
-} from '@/types';
+import { APPLICANT_TYPES, COMPANY_REGIONS, GENDERS } from '@/types';
+import { COMPANY_INDUSTRIES, ksicOptions } from '@/lib/ksic';
 import { useToast } from '@/components/toast';
 import { formatKoreanDateTime } from '@/lib/date-format';
 import {
@@ -29,28 +25,12 @@ type App = {
   leader_birth_date: string;
   leader_gender: string;
   leader_residence: string;
-  participation_type: string;
-  industry: string;
-  information_source: string | null;
-  information_source_other: string | null;
-  item_name: string;
-  item_summary: string;
-  eligibility_confirmed: boolean;
-  exclusion_confirmed: boolean;
+  applicant_type: string | null;
+  company_region: string | null;
+  company_industry: string | null;
+  company_code: string | null;
   requests: string | null;
   updated_at: string;
-  application_members: {
-    name: string;
-    role: string;
-    is_leader: boolean;
-    display_order: number;
-    org: string;
-    email: string;
-    phone: string;
-    birth_date: string;
-    gender: string;
-    residence: string;
-  }[];
   application_files: {
     id: string;
     original_name: string;
@@ -63,6 +43,8 @@ export default function Page() {
   const { showToast } = useToast();
   const [app, setApp] = useState<App | null>(null);
   const [editable, setEditable] = useState(false);
+  const [applicantType, setApplicantType] = useState('');
+  const [companyIndustry, setCompanyIndustry] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   async function reload() {
     try {
@@ -99,6 +81,8 @@ export default function Page() {
       .then((v) => {
         if (v) {
           setApp(v.application);
+          setApplicantType(v.application.applicant_type ?? '');
+          setCompanyIndustry(v.application.company_industry ?? '');
           setEditable(v.editable);
         }
       })
@@ -120,42 +104,14 @@ export default function Page() {
       leaderBirthDate: f.get('leaderBirthDate'),
       leaderGender: f.get('leaderGender'),
       leaderResidence: f.get('leaderResidence'),
-      participationType: f.get('participationType'),
-      industry: f.get('industry'),
-      informationSource: f.get('informationSource'),
-      informationSourceOther: f.get('informationSourceOther') || '',
-      itemName: f.get('itemName'),
-      itemSummary: f.get('itemSummary'),
-      eligibilityConfirmed: true,
-      exclusionConfirmed: true,
+      applicantType: f.get('applicantType'),
+      companyRegion:
+        f.get('applicantType') === '기업' ? f.get('companyRegion') : null,
+      companyIndustry:
+        f.get('applicantType') === '기업' ? f.get('companyIndustry') : null,
+      companyCode:
+        f.get('applicantType') === '기업' ? f.get('companyCode') : null,
       requests: f.get('requests'),
-      members: app.application_members
-        .sort((a, b) => a.display_order - b.display_order)
-        .map((m, i) =>
-          m.is_leader
-            ? {
-                name: String(f.get('leaderName')),
-                role: m.role,
-                isLeader: true,
-                org: String(f.get('leaderOrg')),
-                email: String(f.get('leaderEmail')),
-                phone: String(f.get('leaderPhone')),
-                birthDate: String(f.get('leaderBirthDate')),
-                gender: String(f.get('leaderGender')),
-                residence: String(f.get('leaderResidence')),
-              }
-            : {
-                name: String(f.get(`memberName${i}`)),
-                role: String(f.get(`memberRole${i}`)),
-                isLeader: false,
-                org: String(f.get(`memberOrg${i}`)),
-                email: String(f.get(`memberEmail${i}`)),
-                phone: String(f.get(`memberPhone${i}`)),
-                birthDate: String(f.get(`memberBirthDate${i}`)),
-                gender: String(f.get(`memberGender${i}`)),
-                residence: String(f.get(`memberResidence${i}`)),
-              },
-        ),
     };
     try {
       const r = await fetch('/api/application/me', {
@@ -174,7 +130,7 @@ export default function Page() {
     }
   }
   async function deleteFile(id: string) {
-    if (!confirm('이 증빙자료를 삭제하시겠습니까?')) return;
+    if (!confirm('이 첨부파일를 삭제하시겠습니까?')) return;
     try {
       const r = await fetch(`/api/application/files/${id}`, {
         method: 'DELETE',
@@ -184,7 +140,7 @@ export default function Page() {
         showToast(apiErrorMessage(r.status, v, '삭제하지 못했습니다.'));
         return;
       }
-      showToast('증빙자료를 삭제했습니다.', 'success');
+      showToast('첨부파일를 삭제했습니다.', 'success');
       reload();
     } catch {
       showToast('네트워크 오류로 삭제하지 못했습니다. 다시 시도해주세요.');
@@ -222,7 +178,7 @@ export default function Page() {
         showToast(apiErrorMessage(r.status, v, '추가하지 못했습니다.'));
         return;
       }
-      showToast('증빙자료를 추가했습니다.', 'success');
+      showToast('첨부파일를 추가했습니다.', 'success');
       if (fileInputRef.current) fileInputRef.current.value = '';
       reload();
     } catch (error) {
@@ -302,71 +258,40 @@ export default function Page() {
             autoComplete="address-level1"
           />
           <S
-            n="participationType"
-            l="참가 유형"
-            v={app.participation_type}
-            values={PARTICIPATION_TYPES}
+            n="applicantType"
+            l="기업/일반 구분"
+            v={applicantType}
+            values={APPLICANT_TYPES}
+            onChange={setApplicantType}
           />
-          <S n="industry" l="참가 분야" v={app.industry} values={INDUSTRIES} />
-          <InformationSourceField
-            value={app.information_source ?? ''}
-            otherValue={app.information_source_other ?? ''}
-          />
-          <F
-            n="itemName"
-            l="아이템명"
-            v={app.item_name}
-            placeholder="제안 아이디어를 20자 이내로 표현"
-          />
-          <label className="sm:col-span-2">
-            아이템 요약
-            <textarea
-              name="itemSummary"
-              defaultValue={app.item_summary}
-              placeholder="제안 아이디어의 핵심 내용과 기대 효과를 40자 내외로 요약"
-              className="mt-2 min-h-32 w-full border border-[#dfe3e8] bg-white p-3 outline-none focus:border-[#35c1de] focus:ring-3 focus:ring-[#35c1de]/10"
-            />
-          </label>
-          {app.application_members
-            .sort((a, b) => a.display_order - b.display_order)
-            .map((m, i) =>
-              m.is_leader ? null : (
-                <div className="contents" key={i}>
-                  <F n={`memberName${i}`} l={`팀원 ${i} 이름`} v={m.name} />
-                  <F n={`memberOrg${i}`} l={`팀원 ${i} 소속`} v={m.org} />
-                  <F n={`memberRole${i}`} l="역할" v={m.role} />
-                  <F
-                    n={`memberEmail${i}`}
-                    l={`팀원 ${i} 이메일`}
-                    v={m.email}
-                    type="email"
-                  />
-                  <F
-                    n={`memberPhone${i}`}
-                    l={`팀원 ${i} 연락처`}
-                    v={m.phone}
-                    phone
-                  />
-                  <F
-                    n={`memberBirthDate${i}`}
-                    l={`팀원 ${i} 생년월일`}
-                    v={m.birth_date}
-                    placeholder="예: 260101"
-                  />
-                  <S
-                    n={`memberGender${i}`}
-                    l={`팀원 ${i} 성별`}
-                    v={m.gender}
-                    values={GENDERS}
-                  />
-                  <F
-                    n={`memberResidence${i}`}
-                    l={`팀원 ${i} 거주지`}
-                    v={m.residence}
-                  />
-                </div>
-              ),
-            )}
+          {applicantType === '기업' && (
+            <>
+              <S
+                n="companyRegion"
+                l="기업 소재지"
+                v={app.company_region ?? COMPANY_REGIONS[0]}
+                values={COMPANY_REGIONS}
+              />
+              <S
+                n="companyIndustry"
+                l="기업 산업 분야"
+                v={companyIndustry}
+                values={COMPANY_INDUSTRIES}
+                onChange={setCompanyIndustry}
+              />
+              <S
+                key={companyIndustry}
+                n="companyCode"
+                l="기업 코드 (KSIC)"
+                v={
+                  companyIndustry === app.company_industry
+                    ? (app.company_code ?? '')
+                    : ''
+                }
+                values={ksicOptions(companyIndustry)}
+              />
+            </>
+          )}
           <label className="sm:col-span-2">
             요청사항
             <textarea
@@ -378,7 +303,7 @@ export default function Page() {
         </fieldset>
         {app.application_files.length > 0 && (
           <section>
-            <h2 className="font-bold">증빙자료</h2>
+            <h2 className="font-bold">첨부파일</h2>
             {app.application_files.map((f) => (
               <div key={f.id} className="mt-2 flex items-center gap-3">
                 <a
@@ -408,7 +333,7 @@ export default function Page() {
               onClick={addFiles}
               className="motion-control rounded-lg border px-3 hover:bg-[#f5f5f5]"
             >
-              증빙자료 추가
+              첨부파일 추가
             </button>
           </div>
         )}
@@ -470,12 +395,14 @@ function S({
   v,
   values,
   labels,
+  onChange,
 }: {
   n: string;
   l: string;
   v: string;
   values: readonly string[];
   labels?: string[];
+  onChange?: (value: string) => void;
 }) {
   return (
     <label className="text-sm font-bold">
@@ -483,6 +410,7 @@ function S({
       <select
         name={n}
         defaultValue={v}
+        onChange={onChange && ((e) => onChange(e.target.value))}
         className={`${fieldClass} mt-2 font-normal`}
       >
         {values.map((x, i) => (
@@ -492,45 +420,5 @@ function S({
         ))}
       </select>
     </label>
-  );
-}
-
-function InformationSourceField({
-  value,
-  otherValue,
-}: {
-  value: string;
-  otherValue: string;
-}) {
-  const [selected, setSelected] = useState(value);
-  return (
-    <fieldset className="sm:col-span-2">
-      <legend className="text-sm font-bold">대회 정보 습득 경로</legend>
-      <div className="mt-2 grid gap-3 sm:grid-cols-3">
-        {INFORMATION_SOURCES.map((source) => (
-          <label className="flex items-center gap-2 text-sm" key={source}>
-            <input
-              required
-              type="radio"
-              name="informationSource"
-              value={source}
-              checked={selected === source}
-              onChange={(event) => setSelected(event.target.value)}
-            />
-            {source}
-          </label>
-        ))}
-      </div>
-      {selected === '기타' && (
-        <input
-          required
-          name="informationSourceOther"
-          maxLength={100}
-          defaultValue={otherValue}
-          aria-label="기타 대회 정보 습득 경로"
-          className={`${fieldClass} mt-3 font-normal`}
-        />
-      )}
-    </fieldset>
   );
 }

@@ -14,7 +14,7 @@ type FileRow = {
   applications: {
     receipt_number: string;
     team_name: string;
-    participation_type: string;
+    applicant_type: string | null;
   } | null;
 };
 
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
   let query = db
     .from('application_files')
     .select(
-      'object_key,original_name,size_bytes,created_at,applications!inner(receipt_number,team_name,participation_type)',
+      'object_key,original_name,size_bytes,created_at,applications!inner(receipt_number,team_name,applicant_type)',
     )
     .order('application_id', { ascending: true })
     .order('created_at', { ascending: true });
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
       60,
     );
     const type = sanitizeSegment(
-      items[0].applications?.participation_type ?? '',
+      items[0].applications?.applicant_type ?? '',
       '유형없음',
       20,
     );

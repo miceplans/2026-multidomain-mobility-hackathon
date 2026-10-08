@@ -27,7 +27,7 @@ export const getCachedApplicationList = unstable_cache(
     let query = createAdminClient()
       .from('applications')
       .select(
-        'id,receipt_number,team_name,leader_name,leader_email,leader_phone,participation_type,industry,item_name,created_at,updated_at,application_files(count)',
+        'id,receipt_number,team_name,leader_name,leader_email,leader_phone,applicant_type,company_region,company_industry,company_code,created_at,updated_at,application_files(count)',
         { count: 'exact' },
       );
 

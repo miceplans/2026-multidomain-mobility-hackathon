@@ -15,7 +15,7 @@ export async function GET() {
   const { data, error } = await db
     .from('applications')
     .select(
-      'id,receipt_number,team_name,leader_name,leader_org,leader_email,leader_phone,leader_birth_date,leader_gender,leader_residence,participation_type,industry,information_source,information_source_other,item_name,item_summary,eligibility_confirmed,exclusion_confirmed,requests,created_at,updated_at,application_members(id,name,role,is_leader,display_order,org,email,phone,birth_date,gender,residence),application_files(id,original_name,mime_type,size_bytes,created_at)',
+      'id,receipt_number,team_name,leader_name,leader_org,leader_email,leader_phone,leader_birth_date,leader_gender,leader_residence,applicant_type,company_region,company_industry,company_code,requests,created_at,updated_at,application_files(id,original_name,mime_type,size_bytes,created_at)',
     )
     .eq('id', id)
     .single();
@@ -39,14 +39,6 @@ export async function PATCH(request: NextRequest) {
   const settings = await getSettings();
   if (!applicationEditable(settings))
     return jsonError('현재 신청 내용을 수정할 수 없습니다.', 403);
-  if (
-    settings.item_summary_max_length &&
-    parsed.data.itemSummary.length > settings.item_summary_max_length
-  )
-    return jsonError(
-      `아이템 요약은 ${settings.item_summary_max_length}자 이하로 입력해 주세요.`,
-      422,
-    );
   const normalized = normalizeTeamName(parsed.data.teamName);
   const { error } = await db
     .from('applications')
@@ -62,17 +54,17 @@ export async function PATCH(request: NextRequest) {
       leader_birth_date: parsed.data.leaderBirthDate,
       leader_gender: parsed.data.leaderGender,
       leader_residence: parsed.data.leaderResidence,
-      participation_type: parsed.data.participationType,
-      industry: parsed.data.industry,
-      information_source: parsed.data.informationSource,
-      information_source_other:
-        parsed.data.informationSource === '기타'
-          ? parsed.data.informationSourceOther
+      applicant_type: parsed.data.applicantType,
+      company_region:
+        parsed.data.applicantType === '기업' ? parsed.data.companyRegion : null,
+      company_industry:
+        parsed.data.applicantType === '기업'
+          ? parsed.data.companyIndustry
           : null,
-      item_name: parsed.data.itemName,
-      item_summary: parsed.data.itemSummary,
-      eligibility_confirmed: true,
-      exclusion_confirmed: true,
+      company_code:
+        parsed.data.applicantType === '기업'
+          ? parsed.data.companyCode?.trim()
+          : null,
       requests: parsed.data.requests || null,
     })
     .eq('id', id);
@@ -83,23 +75,6 @@ export async function PATCH(request: NextRequest) {
         : '수정 내용을 저장할 수 없습니다.',
       error.code === '23505' ? 409 : 500,
     );
-  await db.from('application_members').delete().eq('application_id', id);
-  const { error: memberError } = await db.from('application_members').insert(
-    parsed.data.members.map((member, index) => ({
-      application_id: id,
-      name: member.name,
-      role: member.role,
-      is_leader: member.isLeader,
-      display_order: index + 1,
-      org: member.org,
-      email: member.email.toLowerCase(),
-      phone: member.phone,
-      birth_date: member.birthDate,
-      gender: member.gender,
-      residence: member.residence,
-    })),
-  );
-  if (memberError) return jsonError('팀원 정보를 저장할 수 없습니다.', 500);
   invalidateApplicationList();
   return NextResponse.json({ ok: true });
 }

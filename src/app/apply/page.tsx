@@ -1,13 +1,8 @@
 'use client';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { ContestHeader, fieldClass } from '@/components/contest-header';
-import {
-  GENDERS,
-  INDUSTRIES,
-  INFORMATION_SOURCES,
-  PARTICIPATION_TYPES,
-  type SiteSettings,
-} from '@/types';
+import { APPLICANT_TYPES, COMPANY_REGIONS, GENDERS } from '@/types';
+import { COMPANY_INDUSTRIES, ksicOptions } from '@/lib/ksic';
 import { useToast } from '@/components/toast';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -19,59 +14,35 @@ import {
 } from '@/lib/direct-upload';
 import type { UploadTarget } from '@/lib/direct-upload';
 import { apiErrorMessage, readJson, type ApiBody } from '@/lib/api-error';
-type Member = {
-  name: string;
-  role: string;
-  isLeader: boolean;
-  org: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  gender: string;
-  residence: string;
-};
-const emptyMember = (role: string, isLeader: boolean): Member => ({
-  name: '',
-  role,
-  isLeader,
-  org: '',
-  email: '',
-  phone: '',
-  birthDate: '',
-  gender: '',
-  residence: '',
-});
+const FORM_DOWNLOADS = [
+  {
+    href: '/forms/form-1-individual.hwp',
+    file: '첨부1_(신청양식)참가신청서_개인부문.hwp',
+    label: '첨부1. 참가신청서 (개인부문)',
+    types: ['일반'],
+  },
+  {
+    href: '/forms/form-2-company.hwp',
+    file: '첨부2_(신청양식)참가신청서_기업부문.hwp',
+    label: '첨부2. 참가신청서 (기업부문)',
+    types: ['기업'],
+  },
+  {
+    href: '/forms/form-3-consent-pledge.hwp',
+    file: '첨부3_(양식)해커톤_개인정보동의+참가서약서+보안서약서.hwp',
+    label: '첨부3. 개인정보 동의 + 참가서약서 + 보안서약서',
+    types: ['일반', '기업'],
+  },
+];
 export default function ApplyPage() {
   const router = useRouter();
   const { showToast } = useToast();
   const [idempotencyKey] = useState(() => crypto.randomUUID());
-  const [settings, setSettings] = useState<SiteSettings | null>(null);
-  const [leaderName, setLeaderName] = useState('');
-  const [members, setMembers] = useState<Member[]>([
-    emptyMember('팀장', true),
-    emptyMember('', false),
-  ]);
+  const [applicantType, setApplicantType] = useState('');
+  const [companyIndustry, setCompanyIndustry] = useState('');
   const [busy, setBusy] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const [informationSource, setInformationSource] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    fetch('/api/settings')
-      .then((r) => r.json())
-      .then((v) => setSettings(v.settings))
-      .catch(() => showToast('운영 설정을 불러올 수 없습니다.'));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const uploadEnabled = !!settings?.evidence_label;
-  function updateMember(
-    index: number,
-    key: Exclude<keyof Member, 'isLeader'>,
-    value: string,
-  ) {
-    setMembers((v) =>
-      v.map((m, i) => (i === index ? { ...m, [key]: value } : m)),
-    );
-  }
   function onFilesSelected(event: ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(event.target.files ?? []);
     event.target.value = '';
@@ -86,57 +57,41 @@ export default function ApplyPage() {
     setBusy(true);
     const form = event.currentTarget;
     const fd = new FormData(form);
-    const leaderName = String(fd.get('leaderName'));
-    const leaderOrg = String(fd.get('leaderOrg'));
-    const leaderEmail = String(fd.get('leaderEmail'));
-    const leaderPhone = String(fd.get('leaderPhone'));
-    const leaderBirthDate = String(fd.get('leaderBirthDate'));
-    const leaderGender = String(fd.get('leaderGender'));
-    const leaderResidence = String(fd.get('leaderResidence'));
-    const synced = members.map((m, i) =>
-      i === 0
-        ? {
-            ...m,
-            name: leaderName,
-            isLeader: true,
-            org: leaderOrg,
-            email: leaderEmail,
-            phone: leaderPhone,
-            birthDate: leaderBirthDate,
-            gender: leaderGender,
-            residence: leaderResidence,
-          }
-        : { ...m, isLeader: false },
-    );
+    const isCompany = applicantType === '기업';
     const data = {
       idempotencyKey,
+      applicantType,
+      companyRegion: isCompany ? fd.get('companyRegion') || null : null,
+      companyIndustry: isCompany ? companyIndustry || null : null,
+      companyCode: isCompany ? fd.get('companyCode') || null : null,
       teamName: fd.get('teamName'),
-      leaderName,
-      leaderOrg,
-      leaderEmail,
-      leaderPhone,
-      leaderBirthDate,
-      leaderGender,
-      leaderResidence,
-      participationType: fd.get('participationType') || '',
-      industry: fd.get('industry') || '',
-      informationSource: fd.get('informationSource') || '',
-      informationSourceOther: fd.get('informationSourceOther') || '',
-      itemName: fd.get('itemName'),
-      itemSummary: fd.get('itemSummary'),
-      members: synced,
-      eligibilityConfirmed: fd.get('eligibilityConfirmed') === 'on',
-      exclusionConfirmed: fd.get('exclusionConfirmed') === 'on',
+      leaderName: fd.get('leaderName'),
+      leaderOrg: fd.get('leaderOrg'),
+      leaderEmail: fd.get('leaderEmail'),
+      leaderPhone: fd.get('leaderPhone'),
+      leaderBirthDate: fd.get('leaderBirthDate'),
+      leaderGender: fd.get('leaderGender'),
+      leaderResidence: fd.get('leaderResidence'),
       privacyAgreed: fd.get('privacyAgreed') === 'on',
       requests: '',
     };
-    if (!data.participationType) {
-      showToast('참가 유형을 선택해주세요.');
+    if (!applicantType) {
+      showToast('기업/일반 구분을 선택해주세요.');
       setBusy(false);
       return;
     }
-    if (!data.industry) {
-      showToast('참가 분야를 선택해주세요.');
+    if (isCompany && !data.companyRegion) {
+      showToast('기업 소재지를 선택해주세요.');
+      setBusy(false);
+      return;
+    }
+    if (isCompany && (!data.companyIndustry || !data.companyCode)) {
+      showToast('기업 산업 분야와 기업 코드를 선택해주세요.');
+      setBusy(false);
+      return;
+    }
+    if (!files.length) {
+      showToast('신청 서류를 첨부해주세요.');
       setBusy(false);
       return;
     }
@@ -217,7 +172,83 @@ export default function ApplyPage() {
             필수 정보를 정확하게 입력해 주세요.
           </p>
         </div>
-        <Section title="기본 정보">
+        <Section title="참가 구분">
+          <fieldset>
+            <legend className="sr-only">기업/일반 구분 (필수)</legend>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {APPLICANT_TYPES.map((type) => (
+                <label
+                  key={type}
+                  className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm font-bold ${
+                    applicantType === type
+                      ? 'border-[#176f9f] bg-[#effbfe] text-[#176f9f]'
+                      : 'border-[#dfe3e8] text-[#333d4b]'
+                  }`}
+                >
+                  <input
+                    required
+                    type="radio"
+                    name="applicantType"
+                    value={type}
+                    checked={applicantType === type}
+                    onChange={(e) => setApplicantType(e.target.value)}
+                    className="size-4"
+                  />
+                  {type === '기업' ? '기업 참가' : '일반(개인) 참가'}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          {applicantType === '기업' && (
+            <Grid>
+              <Dropdown
+                name="companyRegion"
+                label="기업 소재지"
+                values={COMPANY_REGIONS}
+                columns={1}
+              />
+              <Dropdown
+                name="companyIndustry"
+                label="기업 산업 분야"
+                values={COMPANY_INDUSTRIES}
+                columns={1}
+                onSelect={setCompanyIndustry}
+              />
+              <div className="sm:col-span-2">
+                <Dropdown
+                  key={companyIndustry}
+                  name="companyCode"
+                  label="기업 코드 (KSIC)"
+                  values={ksicOptions(companyIndustry)}
+                  columns={1}
+                  disabled={!companyIndustry}
+                />
+              </div>
+            </Grid>
+          )}
+        </Section>
+        <Section title="신청 서식 다운로드">
+          <p className="text-sm text-[#666]">
+            서식을 내려받아 작성한 뒤, 아래 첨부파일 항목에 제출해 주세요.
+          </p>
+          <ul className="flex flex-col gap-2">
+            {FORM_DOWNLOADS.filter(
+              (form) => !applicantType || form.types.includes(applicantType),
+            ).map((form) => (
+              <li key={form.href}>
+                <a
+                  href={form.href}
+                  download={form.file}
+                  className="motion-control flex items-center justify-between gap-3 rounded-[10px] border border-[#dfe3e8] px-4 py-3 text-sm font-bold text-[#176f9f] hover:bg-[#f5f5f5]"
+                >
+                  <span className="min-w-0">{form.label}</span>
+                  <span className="shrink-0 text-[13px]">다운로드 ↓</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+        <Section title="팀 정보">
           <Grid>
             <Field name="teamName" label="팀명" autoComplete="username" />
           </Grid>
@@ -226,74 +257,9 @@ export default function ApplyPage() {
             설정됩니다.
           </p>
         </Section>
-        <Section title="대회 참가 정보">
-          <Grid>
-            <Dropdown
-              name="participationType"
-              label="참가 유형"
-              values={PARTICIPATION_TYPES}
-              columns={1}
-            />
-            <Dropdown name="industry" label="참가 분야" values={INDUSTRIES} />
-            <Field
-              name="itemName"
-              label="아이템명"
-              maxLength={20}
-              placeholder="제안 아이디어를 20자 이내로 표현"
-            />
-          </Grid>
-          <Label text="아이템 요약">
-            <textarea
-              name="itemSummary"
-              required
-              maxLength={Math.min(settings?.item_summary_max_length ?? 40, 40)}
-              placeholder="제안 아이디어의 핵심 내용과 기대 효과를 40자 내외로 요약"
-              className="min-h-32 border border-[#dfe3e8] bg-white p-4 outline-none hover:border-[#c9d0d8] focus:border-[#35c1de] focus:ring-3 focus:ring-[#35c1de]/10"
-            />
-          </Label>
-        </Section>
-        <Section title="대회 정보 습득 경로">
-          <fieldset>
-            <legend className="sr-only">대회 정보 습득 경로 (필수)</legend>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {INFORMATION_SOURCES.map((source) => (
-                <label className="flex items-center gap-2 text-sm" key={source}>
-                  <input
-                    required
-                    type="radio"
-                    name="informationSource"
-                    value={source}
-                    checked={informationSource === source}
-                    onChange={(event) =>
-                      setInformationSource(event.target.value)
-                    }
-                    className="size-4"
-                  />
-                  {source}
-                </label>
-              ))}
-            </div>
-            {informationSource === '기타' && (
-              <input
-                required
-                name="informationSourceOther"
-                maxLength={100}
-                aria-label="기타 대회 정보 습득 경로"
-                placeholder="기타 경로를 입력해 주세요."
-                className={`${fieldClass} mt-4`}
-              />
-            )}
-          </fieldset>
-        </Section>
         <Section title="신청인(팀장 정보)">
           <Grid>
-            <Field
-              name="leaderName"
-              label="이름"
-              value={leaderName}
-              onChange={(e) => setLeaderName(e.target.value)}
-              autoComplete="name"
-            />
+            <Field name="leaderName" label="이름" autoComplete="name" />
             <Field name="leaderOrg" label="소속" autoComplete="organization" />
             <Field
               name="leaderEmail"
@@ -335,132 +301,8 @@ export default function ApplyPage() {
           </Grid>
           <GenderField name="leaderGender" legend="성별" />
         </Section>
-        <Section title="팀원 정보 (팀장 제외, 1~3명)">
-          {members.map((m, i) =>
-            i === 0 ? null : (
-              <div
-                className="motion-list-item flex flex-col gap-3 rounded-xl border border-[#e5e5e5] p-4"
-                key={i}
-              >
-                <div className="flex items-center justify-between">
-                  {i > 1 && (
-                    <button
-                      type="button"
-                      className="motion-control rounded-lg px-3 py-1 text-sm text-red-700 hover:bg-[#f5f5f5]"
-                      onClick={() =>
-                        setMembers((v) => v.filter((_, x) => x !== i))
-                      }
-                    >
-                      삭제
-                    </button>
-                  )}
-                </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <input
-                    className={fieldClass}
-                    aria-label={`${i}번째 팀원 이름`}
-                    placeholder="이름"
-                    value={m.name}
-                    onChange={(e) => updateMember(i, 'name', e.target.value)}
-                  />
-                  <input
-                    className={fieldClass}
-                    aria-label={`${i}번째 팀원 소속`}
-                    placeholder="소속"
-                    value={m.org}
-                    onChange={(e) => updateMember(i, 'org', e.target.value)}
-                  />
-                  <input
-                    className={fieldClass}
-                    aria-label={`${i}번째 팀원 역할`}
-                    placeholder="팀 내 역할"
-                    value={m.role}
-                    onChange={(e) => updateMember(i, 'role', e.target.value)}
-                  />
-                  <input
-                    className={fieldClass}
-                    type="email"
-                    aria-label={`${i}번째 팀원 이메일`}
-                    placeholder="이메일"
-                    value={m.email}
-                    onChange={(e) => updateMember(i, 'email', e.target.value)}
-                  />
-                  <input
-                    className={fieldClass}
-                    inputMode="numeric"
-                    maxLength={13}
-                    aria-label={`${i}번째 팀원 연락처`}
-                    placeholder="010-0000-0000"
-                    value={m.phone}
-                    onChange={(e) =>
-                      updateMember(
-                        i,
-                        'phone',
-                        formatPhoneNumber(e.target.value),
-                      )
-                    }
-                  />
-                  <input
-                    className={fieldClass}
-                    inputMode="numeric"
-                    maxLength={6}
-                    aria-label={`${i}번째 팀원 생년월일`}
-                    placeholder="생년월일 (예: 260101)"
-                    value={m.birthDate}
-                    onChange={(e) =>
-                      updateMember(
-                        i,
-                        'birthDate',
-                        e.target.value.replace(/\D/g, '').slice(0, 6),
-                      )
-                    }
-                  />
-                  <input
-                    className={fieldClass}
-                    aria-label={`${i}번째 팀원 거주지`}
-                    placeholder="거주지"
-                    value={m.residence}
-                    onChange={(e) =>
-                      updateMember(i, 'residence', e.target.value)
-                    }
-                  />
-                  <fieldset className="flex items-center gap-4 sm:col-span-2">
-                    <legend className="sr-only">{`${i}번째 팀원 성별`}</legend>
-                    {GENDERS.map((g) => (
-                      <label
-                        className="flex items-center gap-2 text-sm"
-                        key={g}
-                      >
-                        <input
-                          type="radio"
-                          name={`memberGender${i}`}
-                          checked={m.gender === g}
-                          onChange={() => updateMember(i, 'gender', g)}
-                          className="size-4"
-                        />
-                        {g}
-                      </label>
-                    ))}
-                  </fieldset>
-                </div>
-              </div>
-            ),
-          )}
-          {members.length < 4 && (
-            <button
-              type="button"
-              className="motion-control w-fit rounded-lg border border-[#b7e4ee] bg-[#effbfe] px-4 py-2 font-bold text-[#176f9f] hover:bg-[#ddf5fa]"
-              onClick={() => setMembers((v) => [...v, emptyMember('', false)])}
-            >
-              팀원 추가
-            </button>
-          )}
-        </Section>
-        {uploadEnabled && (
-          <Section title={settings!.evidence_label!}>
-            {settings?.evidence_purpose && (
-              <p className="text-sm text-[#666]">{settings.evidence_purpose}</p>
-            )}
+        {
+          <Section title="신청 서류 첨부">
             <div className="flex flex-col gap-2 rounded-[10px] border border-[#e5e5e5] px-4 py-2">
               {files.map((file, i) => (
                 <div
@@ -497,9 +339,6 @@ export default function ApplyPage() {
                 </button>
               </div>
             </div>
-            <p className="text-xs font-semibold text-[#111]">
-              파일은 작성 후 합쳐 pdf로 첨부
-            </p>
             <input
               ref={fileInputRef}
               type="file"
@@ -508,48 +347,8 @@ export default function ApplyPage() {
               onChange={onFilesSelected}
             />
           </Section>
-        )}
-        <Section title="유의사항">
-          <ol className="list-decimal space-y-3 pl-5 text-sm leading-6 text-[#4e5968]">
-            <li>접수된 서류는 반환되지 않습니다.</li>
-            <li>
-              제출된 아이디어 제안서의 내용은 접수 및 심사 과정에서 비밀이
-              유지됩니다.
-            </li>
-            <li>
-              타인의 아이디어, 기술 등을 모방하여 발생하는 모든 민·형사상 책임은
-              참가자 본인에게 있습니다.
-            </li>
-            <li>
-              수상 시 상장은 팀명과 팀원명이 기재된 1부만 제공되며, 부상 및
-              지원금은 팀장 명의로 지급됩니다.
-            </li>
-            <li>
-              아이디어명, 참가분야, 팀명, 참가자 및 팀원 등 신청서에 작성한
-              내용은 접수 마감일 이후 변경할 수 없습니다.
-            </li>
-            <li>
-              부정행위가 적발되면 수상이 취소되고 상금이 회수될 수 있습니다.
-            </li>
-            <li>
-              심사결과는 공개하지 않으며, 심사결과와 관련된 문의 및 이의제기
-              등은 일체 받지 않습니다.
-            </li>
-            <li>
-              상금을 수령한 팀은 창업 후에 이행보증증권을 발행해야하며,
-              보증보험료는 자부담으로 진행됩니다.
-            </li>
-          </ol>
-        </Section>
-        <Section title="필수 확인">
-          <Check
-            name="eligibilityConfirmed"
-            text="팀원 전원이 지원대상 요건을 만족합니다."
-          />
-          <Check
-            name="exclusionConfirmed"
-            text="지원 제외 사유에 해당하지 않습니다."
-          />
+        }
+        <Section title="개인정보 동의">
           <Check name="privacyAgreed">
             <Link
               className="font-bold text-[#176f9f] underline underline-offset-4"
@@ -648,11 +447,15 @@ function Dropdown({
   label,
   values,
   columns = 2,
+  onSelect,
+  disabled = false,
 }: {
   name: string;
   label: string;
   values: readonly string[];
   columns?: 1 | 2;
+  onSelect?: (value: string) => void;
+  disabled?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -672,6 +475,7 @@ function Dropdown({
       <div ref={rootRef} className="relative">
         <button
           type="button"
+          disabled={disabled}
           aria-haspopup="listbox"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -704,9 +508,10 @@ function Dropdown({
                   aria-selected={selected}
                   onClick={() => {
                     setValue(v);
+                    onSelect?.(v);
                     setOpen(false);
                   }}
-                  className={`h-10 truncate rounded-[8px] px-3 text-left text-sm ${
+                  className={`min-h-10 rounded-[8px] px-3 py-2 text-left text-sm ${
                     selected
                       ? 'bg-[#176f9f]/10 font-medium text-[#176f9f]'
                       : 'text-[#111] hover:bg-[#f5f5f5]'

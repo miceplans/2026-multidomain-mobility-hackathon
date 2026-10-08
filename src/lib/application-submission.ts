@@ -14,16 +14,6 @@ export async function preflightApplication(json: unknown) {
   if (!parsed.success)
     return { response: validationError(parsed.error) } as const;
   const settings = await getSettings();
-  if (
-    settings.item_summary_max_length &&
-    parsed.data.itemSummary.length > settings.item_summary_max_length
-  )
-    return {
-      response: jsonError(
-        `아이템 요약은 ${settings.item_summary_max_length}자 이하로 입력해 주세요.`,
-        422,
-      ),
-    } as const;
   const db = createAdminClient();
   const { data: duplicate } = await db
     .from('applications')

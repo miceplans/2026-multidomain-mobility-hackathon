@@ -82,21 +82,19 @@ export async function POST(request: NextRequest) {
         leader_birth_date: parsed.data.leaderBirthDate,
         leader_gender: parsed.data.leaderGender,
         leader_residence: parsed.data.leaderResidence,
-        participation_type: parsed.data.participationType,
-        industry: parsed.data.industry,
-        information_source: parsed.data.informationSource,
-        information_source_other:
-          parsed.data.informationSource === '기타'
-            ? parsed.data.informationSourceOther
+        applicant_type: parsed.data.applicantType,
+        company_region:
+          parsed.data.applicantType === '기업'
+            ? parsed.data.companyRegion
             : null,
-        item_name: parsed.data.itemName,
-        item_summary: parsed.data.itemSummary,
-        proposal_background: '',
-        introduction_and_differentiation: '',
-        feasibility_and_business_viability: '',
-        expected_effects: '',
-        eligibility_confirmed: true,
-        exclusion_confirmed: true,
+        company_industry:
+          parsed.data.applicantType === '기업'
+            ? parsed.data.companyIndustry
+            : null,
+        company_code:
+          parsed.data.applicantType === '기업'
+            ? parsed.data.companyCode?.trim()
+            : null,
         privacy_agreed_at: now,
         requests: parsed.data.requests || null,
         idempotency_key: parsed.data.idempotencyKey,
@@ -119,23 +117,6 @@ export async function POST(request: NextRequest) {
     }
     if (error || !application) throw error ?? new Error('신청 저장 실패');
     applicationId = application.id;
-    stage = 'save_members';
-    const { error: memberError } = await db.from('application_members').insert(
-      parsed.data.members.map((member, index) => ({
-        application_id: application.id,
-        name: member.name,
-        role: member.role,
-        is_leader: member.isLeader,
-        display_order: index + 1,
-        org: member.org,
-        email: member.email.toLowerCase(),
-        phone: member.phone,
-        birth_date: member.birthDate,
-        gender: member.gender,
-        residence: member.residence,
-      })),
-    );
-    if (memberError) throw memberError;
     stage = 'register_files';
     await registerUploadedFiles(
       application.id,

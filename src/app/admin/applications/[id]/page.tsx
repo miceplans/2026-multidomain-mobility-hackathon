@@ -15,27 +15,13 @@ type Detail = Record<string, unknown> & {
   leader_birth_date: string;
   leader_gender: string;
   leader_residence: string;
-  participation_type: string;
-  industry: string;
-  information_source: string | null;
-  information_source_other: string | null;
-  item_name: string;
-  item_summary: string;
+  applicant_type: string | null;
+  company_region: string | null;
+  company_industry: string | null;
+  company_code: string | null;
   requests: string | null;
   created_at: string;
   updated_at: string;
-  application_members: {
-    id: string;
-    name: string;
-    role: string;
-    is_leader: boolean;
-    org: string;
-    email: string;
-    phone: string;
-    birth_date: string;
-    gender: string;
-    residence: string;
-  }[];
   application_files: {
     id: string;
     original_name: string;
@@ -148,16 +134,14 @@ export default function Page() {
             ['생년월일', app.leader_birth_date],
             ['성별', app.leader_gender],
             ['거주지', app.leader_residence],
-            ['참가유형', app.participation_type],
-            ['참가분야', app.industry],
-            [
-              '대회 정보 습득 경로',
-              app.information_source === '기타'
-                ? `기타 (${app.information_source_other ?? ''})`
-                : (app.information_source ?? '미입력'),
-            ],
-            ['아이템명', app.item_name],
-            ['아이템요약', app.item_summary],
+            ['구분', app.applicant_type ?? '미입력'],
+            ...(app.applicant_type === '기업'
+              ? [
+                  ['기업 소재지', app.company_region ?? ''],
+                  ['기업 산업 분야', app.company_industry ?? ''],
+                  ['기업 코드', app.company_code ?? ''],
+                ]
+              : []),
             ['요청사항', app.requests ?? ''],
           ].map(([k, v]) => (
             <div key={String(k)}>
@@ -166,64 +150,7 @@ export default function Page() {
             </div>
           ))}
         </dl>
-        <h2 className="mt-8 text-xl font-bold">팀원</h2>
-        <div className="mt-3 overflow-x-auto rounded-2xl border border-[#e5e5e5] bg-white shadow-sm">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="brand-gradient text-white">
-                {[
-                  '이름',
-                  '소속',
-                  '역할',
-                  '이메일',
-                  '연락처',
-                  '생년월일',
-                  '성별',
-                  '거주지',
-                  '구분',
-                ].map((x) => (
-                  <th
-                    className="p-3 text-xs font-bold tracking-wide whitespace-nowrap first:pl-4 last:pr-4"
-                    key={x}
-                  >
-                    {x}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {app.application_members.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={9}
-                    className="p-6 text-center text-sm text-[#999]"
-                  >
-                    팀원 정보가 없습니다.
-                  </td>
-                </tr>
-              )}
-              {app.application_members.map((m) => (
-                <tr
-                  className="border-b border-[#eee] last:border-b-0"
-                  key={m.id}
-                >
-                  <td className="p-3 pl-4 font-bold text-[#111]">{m.name}</td>
-                  <td className="p-3 text-[#333]">{m.org}</td>
-                  <td className="p-3 text-[#333]">{m.role}</td>
-                  <td className="p-3 text-[#333]">{m.email}</td>
-                  <td className="p-3 text-[#333]">{m.phone}</td>
-                  <td className="p-3 text-[#333]">{m.birth_date}</td>
-                  <td className="p-3 text-[#333]">{m.gender}</td>
-                  <td className="p-3 text-[#333]">{m.residence}</td>
-                  <td className="p-3 pr-4 text-[#666]">
-                    {m.is_leader ? '팀장' : '팀원'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <h2 className="mt-8 text-xl font-bold">증빙자료</h2>
+        <h2 className="mt-8 text-xl font-bold">첨부파일</h2>
         {app.application_files.length ? (
           <ul className="mt-3 grid gap-4 sm:grid-cols-2">
             {app.application_files.map((f) => (

@@ -14,8 +14,10 @@ type Row = {
   leader_name: string;
   leader_email: string;
   leader_phone: string;
-  participation_type: string;
-  industry: string;
+  applicant_type: string | null;
+  company_region: string | null;
+  company_industry: string | null;
+  company_code: string | null;
   created_at: string;
   application_files: { count: number }[];
 };
@@ -161,8 +163,8 @@ export default function Page() {
                 {[
                   '접수번호',
                   '팀명/팀장',
-                  '참가유형',
-                  '분야',
+                  '구분',
+                  '기업 소재지·코드',
                   '신청일',
                   '증빙',
                 ].map((x) => (
@@ -208,10 +210,12 @@ export default function Page() {
                     </div>
                   </td>
                   <td className="p-3 whitespace-nowrap text-[#333]">
-                    {x.participation_type}
+                    {x.applicant_type}
                   </td>
                   <td className="p-3 whitespace-nowrap text-[#333]">
-                    {x.industry}
+                    {x.applicant_type === '기업'
+                      ? `${x.company_region} · ${x.company_industry} · ${x.company_code}`
+                      : '-'}
                   </td>
                   {isLateApplication(x.created_at) ? (
                     <td className="p-3 font-semibold whitespace-nowrap text-red-600">
