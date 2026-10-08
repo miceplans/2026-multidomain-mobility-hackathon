@@ -16,9 +16,6 @@ const headers = [
   '팀장소속',
   '팀장이메일',
   '팀장연락처',
-  '팀장생년월일',
-  '팀장성별',
-  '거주지',
   '첨부파일수',
   '요청사항',
   '신청일시',
@@ -35,9 +32,6 @@ type ExportRow = {
   leader_org: string;
   leader_email: string;
   leader_phone: string;
-  leader_birth_date: string;
-  leader_gender: string;
-  leader_residence: string;
   requests: string | null;
   created_at: string;
   updated_at: string;
@@ -53,7 +47,7 @@ export async function GET(request: NextRequest) {
   let q = createAdminClient()
     .from('applications')
     .select(
-      'id,receipt_number,team_name,applicant_type,company_region,company_industry,company_code,leader_name,leader_org,leader_email,leader_phone,leader_birth_date,leader_gender,leader_residence,requests,created_at,updated_at,application_files(count)',
+      'id,receipt_number,team_name,applicant_type,company_region,company_industry,company_code,leader_name,leader_org,leader_email,leader_phone,requests,created_at,updated_at,application_files(count)',
     )
     .order('created_at', { ascending: false });
   if (ids?.length) q = q.in('id', ids);
@@ -71,9 +65,6 @@ export async function GET(request: NextRequest) {
       v.leader_org,
       v.leader_email,
       v.leader_phone,
-      v.leader_birth_date,
-      v.leader_gender,
-      v.leader_residence,
       v.application_files?.[0]?.count ?? 0,
       v.requests ?? '',
       formatKoreanDateTime(v.created_at),

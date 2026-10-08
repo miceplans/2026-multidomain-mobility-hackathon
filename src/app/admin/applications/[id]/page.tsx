@@ -12,9 +12,6 @@ type Detail = Record<string, unknown> & {
   leader_org: string;
   leader_email: string;
   leader_phone: string;
-  leader_birth_date: string;
-  leader_gender: string;
-  leader_residence: string;
   applicant_type: string | null;
   company_region: string | null;
   company_industry: string | null;
@@ -131,9 +128,6 @@ export default function Page() {
             ['소속', app.leader_org],
             ['이메일', app.leader_email],
             ['연락처', app.leader_phone],
-            ['생년월일', app.leader_birth_date],
-            ['성별', app.leader_gender],
-            ['거주지', app.leader_residence],
             ['구분', app.applicant_type ?? '미입력'],
             ...(app.applicant_type === '기업'
               ? [
