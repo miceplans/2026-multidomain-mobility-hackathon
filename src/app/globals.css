@@ -233,6 +233,11 @@ video {
   word-break: keep-all;
 }
 
+.contest-brief-table td:first-child {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
 .contest-brief-table td strong,
 .contest-brief-table td span {
   display: block;
