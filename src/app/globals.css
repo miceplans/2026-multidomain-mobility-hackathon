@@ -763,13 +763,3 @@ input[type='checkbox'] {
     min-height: 44px;
   }
 }
-
-/* 전역 [class*='rounded-'] 규칙(!important)을 피하기 위해 클래스명에 rounded-를 쓰지 않는다. */
-.hero-frame {
-  border-radius: 0;
-}
-@media (min-width: 640px) {
-  .hero-frame {
-    border-radius: 140px;
-  }
-}

@@ -180,21 +180,10 @@ export default async function HomePage() {
                 <span className="sr-only">
                   2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤
                 </span>
-                <div className="hero-frame absolute inset-0 overflow-hidden sm:inset-auto sm:top-0 sm:bottom-[calc(10%+100px)] sm:left-[8%] sm:w-[84%]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    alt=""
-                    className="w-full object-cover"
-                    style={{ height: '100%' }}
-                    height={728}
-                    src="/assets/hero-bg.png"
-                    width={2160}
-                  />
-                </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="absolute right-0 bottom-0 h-auto w-[92%] sm:w-[60%]"
+                  className="absolute right-0 bottom-[40%] h-auto w-[68%] sm:bottom-[26%] sm:w-[40%]"
                   height={1024}
                   src="/assets/hero-ship.png"
                   width={1536}
@@ -202,7 +191,7 @@ export default async function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt=""
-                  className="absolute top-[10%] left-1/2 h-auto w-[84%] -translate-x-1/2 sm:top-[12%] sm:w-[62%]"
+                  className="absolute top-[10%] left-1/2 h-auto w-[72%] -translate-x-1/2 sm:top-[12%] sm:w-[52%]"
                   height={1526}
                   src="/assets/hero-logo.png"
                   width={4096}
@@ -211,7 +200,7 @@ export default async function HomePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="부산↔오사카를 왕복하는 무박 3일간의 선상 크루즈 해커톤"
-                className="mt-8 h-auto w-full max-w-[720px] sm:mt-10"
+                className="relative -mt-[28vw] h-auto w-[80%] max-w-[560px] sm:-mt-[9vw]"
                 height={683}
                 src="/assets/hero-banner.png"
                 width={3368}
