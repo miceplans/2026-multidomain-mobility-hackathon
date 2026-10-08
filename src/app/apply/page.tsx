@@ -1,7 +1,7 @@
 'use client';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { ContestHeader, fieldClass } from '@/components/contest-header';
-import { APPLICANT_TYPES, COMPANY_REGIONS, GENDERS } from '@/types';
+import { APPLICANT_TYPES, COMPANY_REGIONS } from '@/types';
 import { COMPANY_INDUSTRIES, ksicOptions } from '@/lib/ksic';
 import { useToast } from '@/components/toast';
 import Link from 'next/link';
@@ -69,9 +69,6 @@ export default function ApplyPage() {
       leaderOrg: fd.get('leaderOrg'),
       leaderEmail: fd.get('leaderEmail'),
       leaderPhone: fd.get('leaderPhone'),
-      leaderBirthDate: fd.get('leaderBirthDate'),
-      leaderGender: fd.get('leaderGender'),
-      leaderResidence: fd.get('leaderResidence'),
       privacyAgreed: fd.get('privacyAgreed') === 'on',
       requests: '',
     };
@@ -284,26 +281,7 @@ export default function ApplyPage() {
                 );
               }}
             />
-            <Field
-              name="leaderBirthDate"
-              label="생년월일"
-              placeholder="예: 260101"
-              inputMode="numeric"
-              maxLength={6}
-              onChange={(e) => {
-                e.currentTarget.value = e.currentTarget.value
-                  .replace(/\D/g, '')
-                  .slice(0, 6);
-              }}
-            />
-            <Field
-              name="leaderResidence"
-              label="거주지"
-              placeholder="예: 부산"
-              autoComplete="address-level1"
-            />
           </Grid>
-          <GenderField name="leaderGender" legend="성별" />
         </Section>
         {
           <Section title="신청 서류 첨부">
@@ -529,27 +507,6 @@ function Dropdown({
         )}
       </div>
     </Label>
-  );
-}
-function GenderField({ name, legend }: { name: string; legend: string }) {
-  return (
-    <fieldset className="flex flex-col gap-2">
-      <legend className="text-sm font-bold text-[#333d4b]">{legend}</legend>
-      <div className="flex gap-4">
-        {GENDERS.map((g, index) => (
-          <label className="flex items-center gap-2 text-sm" key={g}>
-            <input
-              required={index === 0}
-              type="radio"
-              name={name}
-              value={g}
-              className="size-4"
-            />
-            {g}
-          </label>
-        ))}
-      </div>
-    </fieldset>
   );
 }
 function Check({

@@ -79,9 +79,6 @@ export async function POST(request: NextRequest) {
         leader_org: parsed.data.leaderOrg,
         leader_email: parsed.data.leaderEmail.toLowerCase(),
         leader_phone: parsed.data.leaderPhone,
-        leader_birth_date: parsed.data.leaderBirthDate,
-        leader_gender: parsed.data.leaderGender,
-        leader_residence: parsed.data.leaderResidence,
         applicant_type: parsed.data.applicantType,
         company_region:
           parsed.data.applicantType === '기업'

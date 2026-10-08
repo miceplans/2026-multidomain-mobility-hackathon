@@ -1,6 +1,5 @@
 export const APPLICANT_TYPES = ['일반', '기업'] as const;
 export const COMPANY_REGIONS = ['부산', '울산', '경남'] as const;
-export const GENDERS = ['남', '여'] as const;
 export type FaqItem = { question: string; answer: string };
 export type SiteSettings = {
   is_public: boolean;

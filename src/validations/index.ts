@@ -1,18 +1,9 @@
 import { z } from 'zod';
 import { COMPANY_INDUSTRIES, ksicOptions } from '@/lib/ksic';
-import { APPLICANT_TYPES, COMPANY_REGIONS, GENDERS } from '@/types';
+import { APPLICANT_TYPES, COMPANY_REGIONS } from '@/types';
 
 const requiredText = (label: string, max: number) =>
   z.string().trim().min(1, `${label}을(를) 입력해 주세요.`).max(max);
-const birthDateField = (label: string) =>
-  z
-    .string()
-    .regex(
-      /^\d{6}$/,
-      `${label}을(를) 생년월일 6자리(예: 260101)로 입력해 주세요.`,
-    );
-const genderField = (label: string) =>
-  z.enum(GENDERS, { error: `${label}을(를) 선택해 주세요.` });
 export function normalizeTeamName(value: string) {
   return value
     .normalize('NFKC')
@@ -47,9 +38,6 @@ const applicationBaseSchema = z.object({
   leaderPhone: z
     .string()
     .regex(/^01[016789]-?\d{3,4}-?\d{4}$/, '올바른 연락처를 입력해 주세요.'),
-  leaderBirthDate: birthDateField('팀장 생년월일'),
-  leaderGender: genderField('팀장 성별'),
-  leaderResidence: requiredText('거주지', 100),
   privacyAgreed: z.literal(true),
   requests: z.string().trim().max(2000).optional().default(''),
 });

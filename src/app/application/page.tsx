@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ContestHeader, fieldClass } from '@/components/contest-header';
 import { formatPhoneNumber } from '@/validations';
-import { APPLICANT_TYPES, COMPANY_REGIONS, GENDERS } from '@/types';
+import { APPLICANT_TYPES, COMPANY_REGIONS } from '@/types';
 import { COMPANY_INDUSTRIES, ksicOptions } from '@/lib/ksic';
 import { useToast } from '@/components/toast';
 import { formatKoreanDateTime } from '@/lib/date-format';
@@ -22,9 +22,6 @@ type App = {
   leader_org: string;
   leader_email: string;
   leader_phone: string;
-  leader_birth_date: string;
-  leader_gender: string;
-  leader_residence: string;
   applicant_type: string | null;
   company_region: string | null;
   company_industry: string | null;
@@ -101,9 +98,6 @@ export default function Page() {
       leaderOrg: f.get('leaderOrg'),
       leaderEmail: f.get('leaderEmail'),
       leaderPhone: f.get('leaderPhone'),
-      leaderBirthDate: f.get('leaderBirthDate'),
-      leaderGender: f.get('leaderGender'),
-      leaderResidence: f.get('leaderResidence'),
       applicantType: f.get('applicantType'),
       companyRegion:
         f.get('applicantType') === '기업' ? f.get('companyRegion') : null,
@@ -248,19 +242,6 @@ export default function Page() {
             v={app.leader_phone}
             autoComplete="tel"
             phone
-          />
-          <F
-            n="leaderBirthDate"
-            l="생년월일"
-            v={app.leader_birth_date}
-            placeholder="예: 260101"
-          />
-          <S n="leaderGender" l="성별" v={app.leader_gender} values={GENDERS} />
-          <F
-            n="leaderResidence"
-            l="거주지"
-            v={app.leader_residence}
-            autoComplete="address-level1"
           />
           <S
             n="applicantType"

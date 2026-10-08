@@ -15,7 +15,7 @@ export async function GET() {
   const { data, error } = await db
     .from('applications')
     .select(
-      'id,receipt_number,team_name,leader_name,leader_org,leader_email,leader_phone,leader_birth_date,leader_gender,leader_residence,applicant_type,company_region,company_industry,company_code,requests,created_at,updated_at,application_files(id,original_name,mime_type,size_bytes,created_at)',
+      'id,receipt_number,team_name,leader_name,leader_org,leader_email,leader_phone,applicant_type,company_region,company_industry,company_code,requests,created_at,updated_at,application_files(id,original_name,mime_type,size_bytes,created_at)',
     )
     .eq('id', id)
     .single();
@@ -51,9 +51,6 @@ export async function PATCH(request: NextRequest) {
       leader_phone: parsed.data.leaderPhone,
       password_hash: await hash(phoneLastFour(parsed.data.leaderPhone), 12),
       credential_type: 'phone_last_four',
-      leader_birth_date: parsed.data.leaderBirthDate,
-      leader_gender: parsed.data.leaderGender,
-      leader_residence: parsed.data.leaderResidence,
       applicant_type: parsed.data.applicantType,
       company_region:
         parsed.data.applicantType === '기업' ? parsed.data.companyRegion : null,
