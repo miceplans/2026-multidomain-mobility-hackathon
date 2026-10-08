@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 
 export const metadata: Metadata = {
-  title: '개인정보처리방침 | 2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤',
+  title: '개인정보처리방침',
   description:
     '2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤 개인정보처리방침',
 };

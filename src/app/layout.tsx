@@ -5,7 +5,7 @@ import { ToastProvider } from '@/components/toast';
 
 const siteName = '2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤';
 const siteDescription =
-  '동남권 혁신클러스터의 특화산업인 멀티도메인 모빌리티 기술과 AI·데이터를 융합한 문제해결형 비즈니스 모델 발굴 해커톤';
+  '2026 멀티도메인 해커톤 · 모빌리티 해커톤. 동남권 혁신클러스터의 특화산업인 멀티도메인 모빌리티 기술과 AI·데이터를 융합한 문제해결형 비즈니스 모델 발굴 해커톤';
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   description: siteDescription,
   applicationName: siteName,
   keywords: [
+    '멀티도메인 해커톤',
+    '2026 멀티도메인 해커톤',
+    '멀티도메인 모빌리티 해커톤',
     '멀티도메인 모빌리티',
     '모빌리티 해커톤',
     '동남권 해커톤',
@@ -39,7 +42,7 @@ export const metadata: Metadata = {
     url: '/',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: siteName,
     description: siteDescription,
   },
