@@ -323,7 +323,7 @@ export default async function HomePage() {
             <img
               className="mt-10 h-auto w-full max-w-[900px] sm:mt-16"
               src="/assets/organizers.png"
-              width={4513}
+              width={4489}
               height={162}
               alt="주최 산업통상부, 부산광역시, 울산광역시, 경상남도 / 주관 한국산업기술진흥원, 동남권지역혁신융복합단지추진단 / 공동 운영 부산테크노파크, 울산지역산업진흥원, 경남테크노파크"
             />
