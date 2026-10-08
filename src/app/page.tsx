@@ -154,8 +154,53 @@ export default async function HomePage() {
     />
   );
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Event',
+        name: '2026 동남권 멀티도메인 모빌리티 비즈니스 해커톤',
+        description:
+          '멀티도메인 모빌리티 기술과 AI·데이터를 융합한 문제해결형 비즈니스 모델 발굴 해커톤',
+        startDate: '2026-11-08',
+        endDate: '2026-11-10',
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        inLanguage: 'ko',
+        url: siteUrl,
+        location: {
+          '@type': 'Place',
+          name: '부산 아스티호텔, 팬스타미라클호, 일본 오사카항 일원',
+        },
+        organizer: [
+          { '@type': 'Organization', name: '한국산업기술진흥원' },
+          { '@type': 'Organization', name: '동남권지역혁신융복합단지추진단' },
+        ],
+      },
+      ...(faqs.length
+        ? [
+            {
+              '@type': 'FAQPage',
+              mainEntity: faqs.map((f) => ({
+                '@type': 'Question',
+                name: f.question,
+                acceptedAnswer: { '@type': 'Answer', text: f.answer },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+
   return (
     <div className="landing-high-contrast min-h-screen bg-[#05070f] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
       <header className="sticky top-0 z-20 bg-[#010622]">
         <div className="relative flex items-center justify-between gap-4 px-5 py-[22px] sm:px-8 lg:px-[120px]">
           <Link className="flex min-h-11 items-center" href="/">
