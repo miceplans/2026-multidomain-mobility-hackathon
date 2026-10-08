@@ -9,6 +9,31 @@ export const dynamic = 'force-dynamic';
 
 const prizePattern = /(총상금 [\d,]+만원|사업화지원금 최대 [\d억천만원]+ 이내)/;
 
+const scoreTables = [
+  {
+    title: '개인부문(예선) 심사위원 평가표',
+    rows: [
+      ['제안 배경과 필요성의 타당성', 15],
+      ['아이디어의 독창성·차별성', 20],
+      ['사용자 관점의 문제 해결방안 적절성', 20],
+      ['최종 성과물 개발 계획의 구체성', 10],
+      ['기술 구현을 위한 접근 방법의 타당성', 20],
+      ['비즈니스모델 활성화·파급성·지속가능성', 15],
+    ],
+  },
+  {
+    title: '기업부문(예선) 심사위원 평가표',
+    rows: [
+      ['제안 배경과 필요성의 타당성', 15],
+      ['기술 및 서비스의 독창성·차별성', 15],
+      ['최종 성과물 개발 계획의 구체성', 10],
+      ['기술 구현을 위한 접근 방법의 타당성', 20],
+      ['개발기술의 시장성·사업화 가능성', 20],
+      ['비즈니스모델 활성화·파급성·지속가능성', 20],
+    ],
+  },
+] as const
+
 const awards = [
   ['본선 진출작', '본선 참가경비(부산-오사카 크루즈 승선료 등) 전액 지원'],
   [
@@ -543,6 +568,47 @@ export default async function HomePage() {
                     </table>
                   </div>
                 </section>
+              </div>
+
+              <div aria-labelledby="contest-scoring">
+                <h3 id="contest-scoring" className="contest-brief-title">
+                  심사 평가 배점
+                </h3>
+                <div className="mt-4 grid gap-5 lg:grid-cols-2">
+                  {scoreTables.map(({ title, rows }) => (
+                    <section className={panel} key={title}>
+                      <p className="px-1 pb-2 text-lg font-semibold text-white">
+                        {title}
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="contest-brief-table contest-score-table">
+                          <thead>
+                            <tr>
+                              <th>평가항목</th>
+                              <th>배점</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {rows.map(([name, score], index) => (
+                              <tr key={name}>
+                                <td>
+                                  {index + 1}. {name}
+                                </td>
+                                <td>{score}</td>
+                              </tr>
+                            ))}
+                            <tr>
+                              <td>합계</td>
+                              <td>
+                                {rows.reduce((sum, [, score]) => sum + score, 0)}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  ))}
+                </div>
               </div>
 
               <div aria-labelledby="contest-notices">
